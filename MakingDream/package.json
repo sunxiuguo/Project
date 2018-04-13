@@ -1,0 +1,36 @@
+{
+  "name": "makingdream",
+  "version": "1.0.0",
+  "description": "Make your dreams",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev":"webpack --mode development",
+   "build":"webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sunxiuguo/MakingDream.git"
+  },
+  "keywords": [
+    "node.js",
+    "koa",
+    "小程序"
+  ],
+  "author": "sunxiuguo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunxiuguo/MakingDream/issues"
+  },
+  "homepage": "https://github.com/sunxiuguo/MakingDream#readme",
+  "dependencies": {
+    "koa": "^2.5.0",
+    "koa-compose": "^4.0.0",
+    "koa-route": "^3.2.0",
+    "media-typer": "^0.3.0",
+    "mime-types": "^2.1.18",
+    "mongoose": "^5.0.14",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14"
+  }
+}
