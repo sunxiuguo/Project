@@ -1,0 +1,262 @@
+2018-04-13T15:57:23.479+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T15:57:23.524+0800 I CONTROL  [initandlisten] MongoDB starting : pid=30495 port=27017 dbpath=/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb 64-bit host=MacBook-Pro-3.local
+2018-04-13T15:57:23.525+0800 I CONTROL  [initandlisten] db version v3.6.3
+2018-04-13T15:57:23.525+0800 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-04-13T15:57:23.525+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2o  27 Mar 2018
+2018-04-13T15:57:23.525+0800 I CONTROL  [initandlisten] allocator: system
+2018-04-13T15:57:23.526+0800 I CONTROL  [initandlisten] modules: none
+2018-04-13T15:57:23.526+0800 I CONTROL  [initandlisten] build environment:
+2018-04-13T15:57:23.526+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2018-04-13T15:57:23.527+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-04-13T15:57:23.527+0800 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "data/mongodb", directoryPerDB: true }, systemLog: { destination: "file", logAppend: true, path: "data/logs/youlog.log" } }
+2018-04-13T15:57:23.528+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3584M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2018-04-13T15:57:24.277+0800 I CONTROL  [initandlisten] 
+2018-04-13T15:57:24.278+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-04-13T15:57:24.278+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-04-13T15:57:24.279+0800 I CONTROL  [initandlisten] 
+2018-04-13T15:57:24.279+0800 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2018-04-13T15:57:24.280+0800 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2018-04-13T15:57:24.280+0800 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2018-04-13T15:57:24.281+0800 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2018-04-13T15:57:24.281+0800 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2018-04-13T15:57:24.282+0800 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2018-04-13T15:57:24.282+0800 I CONTROL  [initandlisten] 
+2018-04-13T15:57:24.292+0800 I STORAGE  [initandlisten] createCollection: admin.system.version with provided UUID: bc6aaaaa-6c8a-4a12-a4f2-2d32e70800be
+2018-04-13T15:57:24.354+0800 I COMMAND  [initandlisten] setting featureCompatibilityVersion to 3.6
+2018-04-13T15:57:24.363+0800 I STORAGE  [initandlisten] createCollection: local.startup_log with generated UUID: f4be0492-5d17-4212-a85b-1113eb11db03
+2018-04-13T15:57:24.413+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb/diagnostic.data'
+2018-04-13T15:57:24.418+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
+2018-04-13T16:02:24.433+0800 I STORAGE  [thread1] createCollection: config.system.sessions with generated UUID: 50b59d75-ea9e-452e-bc5a-0ebb29eca88b
+2018-04-13T16:02:24.534+0800 I INDEX    [thread1] build index on: config.system.sessions properties: { v: 2, key: { lastUse: 1 }, name: "lsidTTLIndex", ns: "config.system.sessions", expireAfterSeconds: 1800 }
+2018-04-13T16:02:24.535+0800 I INDEX    [thread1] 	 building index using bulk method; build may temporarily use up to 500 megabytes of RAM
+2018-04-13T16:02:24.553+0800 I INDEX    [thread1] build index done.  scanned 0 total records. 0 secs
+2018-04-13T16:02:24.556+0800 I COMMAND  [thread1] command config.$cmd command: createIndexes { createIndexes: "system.sessions", indexes: [ { key: { lastUse: 1 }, name: "lsidTTLIndex", expireAfterSeconds: 1800 } ], $db: "config" } numYields:0 reslen:98 locks:{ Global: { acquireCount: { r: 1, w: 1 } }, Database: { acquireCount: { W: 1 } }, Collection: { acquireCount: { w: 1 } } } protocol:op_msg 124ms
+2018-04-13T16:02:43.973+0800 I CONTROL  [signalProcessingThread] got signal 15 (Terminated: 15), will terminate after current cmd ends
+2018-04-13T16:02:43.975+0800 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+2018-04-13T16:02:43.975+0800 I NETWORK  [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+2018-04-13T16:02:43.976+0800 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+2018-04-13T16:02:43.979+0800 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+2018-04-13T16:02:44.242+0800 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+2018-04-13T16:02:44.245+0800 I CONTROL  [signalProcessingThread] now exiting
+2018-04-13T16:02:44.246+0800 I CONTROL  [signalProcessingThread] shutting down with code:0
+2018-04-13T16:03:20.611+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] MongoDB starting : pid=30621 port=27017 dbpath=/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb 64-bit host=MacBook-Pro-3.local
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] db version v3.6.3
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2o  27 Mar 2018
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] allocator: system
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] modules: none
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] build environment:
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-04-13T16:03:20.631+0800 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "data/mongodb", directoryPerDB: true }, systemLog: { destination: "file", logAppend: true, path: "data/logs/youlog.log" } }
+2018-04-13T16:03:20.634+0800 I -        [initandlisten] Detected data files in /Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2018-04-13T16:03:20.634+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3584M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2018-04-13T16:03:21.312+0800 I STORAGE  [initandlisten] WiredTiger message [1523606601:312401][30621:0x7fff8f192340], txn-recover: Main recovery loop: starting at 1/22784
+2018-04-13T16:03:21.406+0800 I STORAGE  [initandlisten] WiredTiger message [1523606601:406777][30621:0x7fff8f192340], txn-recover: Recovering log 1 through 2
+2018-04-13T16:03:21.472+0800 I STORAGE  [initandlisten] WiredTiger message [1523606601:472806][30621:0x7fff8f192340], txn-recover: Recovering log 2 through 2
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2018-04-13T16:03:21.680+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:03:21.688+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb/diagnostic.data'
+2018-04-13T16:03:21.689+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
+2018-04-13T16:05:06.099+0800 I CONTROL  [signalProcessingThread] got signal 15 (Terminated: 15), will terminate after current cmd ends
+2018-04-13T16:05:06.104+0800 I NETWORK  [signalProcessingThread] shutdown: going to close listening sockets...
+2018-04-13T16:05:06.104+0800 I NETWORK  [signalProcessingThread] removing socket file: /tmp/mongodb-27017.sock
+2018-04-13T16:05:06.105+0800 I FTDC     [signalProcessingThread] Shutting down full-time diagnostic data capture
+2018-04-13T16:05:06.106+0800 I STORAGE  [signalProcessingThread] WiredTigerKVEngine shutting down
+2018-04-13T16:05:06.343+0800 I STORAGE  [signalProcessingThread] shutdown: removing fs lock...
+2018-04-13T16:05:06.348+0800 I CONTROL  [signalProcessingThread] now exiting
+2018-04-13T16:05:06.348+0800 I CONTROL  [signalProcessingThread] shutting down with code:0
+2018-04-13T16:05:48.467+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T16:06:07.011+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T16:06:49.112+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] MongoDB starting : pid=30751 port=27017 dbpath=/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb 64-bit host=MacBook-Pro-3.local
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] db version v3.6.3
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2o  27 Mar 2018
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] allocator: system
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] modules: none
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] build environment:
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-04-13T16:06:49.158+0800 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "data/mongodb", directoryPerDB: true }, systemLog: { destination: "file", logAppend: true, path: "data/logs/youlog.log" } }
+2018-04-13T16:06:49.159+0800 I -        [initandlisten] Detected data files in /Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2018-04-13T16:06:49.159+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3584M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2018-04-13T16:06:49.876+0800 I STORAGE  [initandlisten] WiredTiger message [1523606809:876613][30751:0x7fff8f192340], txn-recover: Main recovery loop: starting at 2/6400
+2018-04-13T16:06:49.966+0800 I STORAGE  [initandlisten] WiredTiger message [1523606809:966989][30751:0x7fff8f192340], txn-recover: Recovering log 2 through 3
+2018-04-13T16:06:50.037+0800 I STORAGE  [initandlisten] WiredTiger message [1523606810:37964][30751:0x7fff8f192340], txn-recover: Recovering log 3 through 3
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2018-04-13T16:06:50.258+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:06:50.280+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb/diagnostic.data'
+2018-04-13T16:06:50.281+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
+2018-04-13T16:07:56.500+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:50341 #1 (1 connection now open)
+2018-04-13T16:07:56.502+0800 I NETWORK  [conn1] received client metadata from 127.0.0.1:50341 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:13:39.951+0800 I COMMAND  [conn1] terminating, shutdown command received
+2018-04-13T16:13:39.952+0800 I NETWORK  [conn1] shutdown: going to close listening sockets...
+2018-04-13T16:13:39.952+0800 I NETWORK  [conn1] removing socket file: /tmp/mongodb-27017.sock
+2018-04-13T16:13:39.952+0800 I FTDC     [conn1] Shutting down full-time diagnostic data capture
+2018-04-13T16:13:39.954+0800 I STORAGE  [conn1] WiredTigerKVEngine shutting down
+2018-04-13T16:13:40.197+0800 I STORAGE  [conn1] shutdown: removing fs lock...
+2018-04-13T16:13:40.201+0800 I CONTROL  [conn1] now exiting
+2018-04-13T16:13:40.201+0800 I CONTROL  [conn1] shutting down with code:0
+2018-04-13T16:29:33.484+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] MongoDB starting : pid=31087 port=27017 dbpath=/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb 64-bit host=MacBook-Pro-3.local
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] db version v3.6.3
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2o  27 Mar 2018
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] allocator: system
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] modules: none
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] build environment:
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-04-13T16:29:33.532+0800 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "data/mongodb", directoryPerDB: true }, systemLog: { destination: "file", logAppend: true, path: "data/logs/youlog.log" } }
+2018-04-13T16:29:33.534+0800 I -        [initandlisten] Detected data files in /Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2018-04-13T16:29:33.534+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3584M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2018-04-13T16:29:34.315+0800 I STORAGE  [initandlisten] WiredTiger message [1523608174:315247][31087:0x7fff8f192340], txn-recover: Main recovery loop: starting at 3/7040
+2018-04-13T16:29:34.410+0800 I STORAGE  [initandlisten] WiredTiger message [1523608174:410002][31087:0x7fff8f192340], txn-recover: Recovering log 3 through 4
+2018-04-13T16:29:34.475+0800 I STORAGE  [initandlisten] WiredTiger message [1523608174:475696][31087:0x7fff8f192340], txn-recover: Recovering log 4 through 4
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2018-04-13T16:29:34.690+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:29:34.712+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb/diagnostic.data'
+2018-04-13T16:29:34.712+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
+2018-04-13T16:29:37.664+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53217 #1 (1 connection now open)
+2018-04-13T16:29:37.664+0800 I NETWORK  [conn1] received client metadata from 127.0.0.1:53217 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:29:57.470+0800 I NETWORK  [conn1] end connection 127.0.0.1:53217 (0 connections now open)
+2018-04-13T16:31:14.973+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53243 #2 (1 connection now open)
+2018-04-13T16:31:14.974+0800 I NETWORK  [conn2] received client metadata from 127.0.0.1:53243 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:32:41.677+0800 I NETWORK  [conn2] end connection 127.0.0.1:53243 (0 connections now open)
+2018-04-13T16:33:21.643+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53269 #3 (1 connection now open)
+2018-04-13T16:33:21.643+0800 I NETWORK  [conn3] received client metadata from 127.0.0.1:53269 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:34:01.813+0800 I NETWORK  [conn3] end connection 127.0.0.1:53269 (0 connections now open)
+2018-04-13T16:34:14.014+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53278 #4 (1 connection now open)
+2018-04-13T16:34:14.014+0800 I NETWORK  [conn4] received client metadata from 127.0.0.1:53278 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:35:22.440+0800 I NETWORK  [conn4] end connection 127.0.0.1:53278 (0 connections now open)
+2018-04-13T16:35:31.206+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53337 #5 (1 connection now open)
+2018-04-13T16:35:31.206+0800 I NETWORK  [conn5] received client metadata from 127.0.0.1:53337 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:35:41.480+0800 I COMMAND  [conn5] terminating, shutdown command received
+2018-04-13T16:35:41.481+0800 I NETWORK  [conn5] shutdown: going to close listening sockets...
+2018-04-13T16:35:41.481+0800 I NETWORK  [conn5] removing socket file: /tmp/mongodb-27017.sock
+2018-04-13T16:35:41.482+0800 I FTDC     [conn5] Shutting down full-time diagnostic data capture
+2018-04-13T16:35:41.483+0800 I STORAGE  [conn5] WiredTigerKVEngine shutting down
+2018-04-13T16:35:41.662+0800 I STORAGE  [conn5] shutdown: removing fs lock...
+2018-04-13T16:35:41.666+0800 I CONTROL  [conn5] now exiting
+2018-04-13T16:35:41.666+0800 I CONTROL  [conn5] shutting down with code:0
+2018-04-13T16:37:06.102+0800 I CONTROL  [main] ***** SERVER RESTARTED *****
+2018-04-13T16:37:06.146+0800 I CONTROL  [initandlisten] MongoDB starting : pid=31297 port=27017 dbpath=/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb 64-bit host=MacBook-Pro-3.local
+2018-04-13T16:37:06.147+0800 I CONTROL  [initandlisten] db version v3.6.3
+2018-04-13T16:37:06.147+0800 I CONTROL  [initandlisten] git version: 9586e557d54ef70f9ca4b43c26892cd55257e1a5
+2018-04-13T16:37:06.147+0800 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.0.2o  27 Mar 2018
+2018-04-13T16:37:06.148+0800 I CONTROL  [initandlisten] allocator: system
+2018-04-13T16:37:06.148+0800 I CONTROL  [initandlisten] modules: none
+2018-04-13T16:37:06.148+0800 I CONTROL  [initandlisten] build environment:
+2018-04-13T16:37:06.148+0800 I CONTROL  [initandlisten]     distarch: x86_64
+2018-04-13T16:37:06.149+0800 I CONTROL  [initandlisten]     target_arch: x86_64
+2018-04-13T16:37:06.149+0800 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "data/mongodb", directoryPerDB: true }, systemLog: { destination: "file", logAppend: true, path: "data/logs/youlog.log" } }
+2018-04-13T16:37:06.150+0800 I -        [initandlisten] Detected data files in /Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2018-04-13T16:37:06.151+0800 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=3584M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2018-04-13T16:37:06.898+0800 I STORAGE  [initandlisten] WiredTiger message [1523608626:898014][31297:0x7fff8f192340], txn-recover: Main recovery loop: starting at 4/7040
+2018-04-13T16:37:06.988+0800 I STORAGE  [initandlisten] WiredTiger message [1523608626:988352][31297:0x7fff8f192340], txn-recover: Recovering log 4 through 5
+2018-04-13T16:37:07.060+0800 I STORAGE  [initandlisten] WiredTiger message [1523608627:60329][31297:0x7fff8f192340], txn-recover: Recovering log 5 through 5
+2018-04-13T16:37:07.288+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:37:07.288+0800 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2018-04-13T16:37:07.289+0800 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2018-04-13T16:37:07.289+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:37:07.290+0800 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2018-04-13T16:37:07.290+0800 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2018-04-13T16:37:07.291+0800 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2018-04-13T16:37:07.291+0800 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2018-04-13T16:37:07.292+0800 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2018-04-13T16:37:07.293+0800 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2018-04-13T16:37:07.293+0800 I CONTROL  [initandlisten] 
+2018-04-13T16:37:07.312+0800 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/Users/sunxiuguo/WxMiniPrograms/RushTicket/data/mongodb/diagnostic.data'
+2018-04-13T16:37:07.313+0800 I NETWORK  [initandlisten] waiting for connections on port 27017
+2018-04-13T16:47:30.514+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53899 #1 (1 connection now open)
+2018-04-13T16:47:30.521+0800 I NETWORK  [conn1] received client metadata from 127.0.0.1:53899 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T16:47:30.528+0800 I NETWORK  [conn1] end connection 127.0.0.1:53899 (0 connections now open)
+2018-04-13T16:48:37.453+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53921 #2 (1 connection now open)
+2018-04-13T16:48:37.454+0800 I NETWORK  [conn2] received client metadata from 127.0.0.1:53921 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:49:15.306+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53933 #3 (2 connections now open)
+2018-04-13T16:49:15.312+0800 I NETWORK  [conn3] received client metadata from 127.0.0.1:53933 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T16:49:15.319+0800 I NETWORK  [conn3] end connection 127.0.0.1:53933 (1 connection now open)
+2018-04-13T16:54:40.538+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54112 #4 (2 connections now open)
+2018-04-13T16:54:40.545+0800 I NETWORK  [conn4] received client metadata from 127.0.0.1:54112 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T16:54:56.524+0800 I NETWORK  [conn2] end connection 127.0.0.1:53921 (1 connection now open)
+2018-04-13T16:58:07.924+0800 I NETWORK  [conn4] end connection 127.0.0.1:54112 (0 connections now open)
+2018-04-13T16:58:13.779+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54170 #5 (1 connection now open)
+2018-04-13T16:58:13.784+0800 I NETWORK  [conn5] received client metadata from 127.0.0.1:54170 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T16:58:13.790+0800 I NETWORK  [conn5] end connection 127.0.0.1:54170 (0 connections now open)
+2018-04-13T16:59:57.401+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54197 #6 (1 connection now open)
+2018-04-13T16:59:57.408+0800 I NETWORK  [conn6] received client metadata from 127.0.0.1:54197 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T16:59:57.417+0800 I NETWORK  [conn6] end connection 127.0.0.1:54197 (0 connections now open)
+2018-04-13T17:06:35.391+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54406 #7 (1 connection now open)
+2018-04-13T17:06:35.398+0800 I NETWORK  [conn7] received client metadata from 127.0.0.1:54406 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:06:35.416+0800 I STORAGE  [conn7] createCollection: test.site with generated UUID: 8c46710f-21bd-484b-8517-2504cfdb2621
+2018-04-13T17:06:35.486+0800 I NETWORK  [conn7] end connection 127.0.0.1:54406 (0 connections now open)
+2018-04-13T17:06:50.032+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54411 #8 (1 connection now open)
+2018-04-13T17:06:50.033+0800 I NETWORK  [conn8] received client metadata from 127.0.0.1:54411 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T17:07:27.854+0800 E QUERY    [js] ReferenceError: \u83DC\u9E1F\u8054\u76DF is not defined :
+@:1:15
+2018-04-13T17:10:23.750+0800 I NETWORK  [conn8] end connection 127.0.0.1:54411 (0 connections now open)
+2018-04-13T17:10:40.571+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54631 #9 (1 connection now open)
+2018-04-13T17:10:40.576+0800 I NETWORK  [conn9] received client metadata from 127.0.0.1:54631 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:10:40.582+0800 I NETWORK  [conn9] end connection 127.0.0.1:54631 (0 connections now open)
+2018-04-13T17:10:50.427+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54633 #10 (1 connection now open)
+2018-04-13T17:10:50.433+0800 I NETWORK  [conn10] received client metadata from 127.0.0.1:54633 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:10:50.440+0800 I NETWORK  [conn10] end connection 127.0.0.1:54633 (0 connections now open)
+2018-04-13T17:11:02.649+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54641 #11 (1 connection now open)
+2018-04-13T17:11:02.654+0800 I NETWORK  [conn11] received client metadata from 127.0.0.1:54641 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:11:02.660+0800 I NETWORK  [conn11] end connection 127.0.0.1:54641 (0 connections now open)
+2018-04-13T17:11:17.758+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54644 #12 (1 connection now open)
+2018-04-13T17:11:17.763+0800 I NETWORK  [conn12] received client metadata from 127.0.0.1:54644 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:11:17.777+0800 I NETWORK  [conn12] end connection 127.0.0.1:54644 (0 connections now open)
+2018-04-13T17:11:30.085+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54650 #13 (1 connection now open)
+2018-04-13T17:11:30.092+0800 I NETWORK  [conn13] received client metadata from 127.0.0.1:54650 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:11:30.111+0800 I NETWORK  [conn13] end connection 127.0.0.1:54650 (0 connections now open)
+2018-04-13T17:14:07.762+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54702 #14 (1 connection now open)
+2018-04-13T17:14:07.770+0800 I NETWORK  [conn14] received client metadata from 127.0.0.1:54702 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:14:07.787+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54703 #15 (2 connections now open)
+2018-04-13T17:14:07.795+0800 I NETWORK  [conn15] end connection 127.0.0.1:54703 (1 connection now open)
+2018-04-13T17:14:07.796+0800 I NETWORK  [conn14] end connection 127.0.0.1:54702 (0 connections now open)
+2018-04-13T17:19:13.616+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54867 #16 (1 connection now open)
+2018-04-13T17:19:13.617+0800 I NETWORK  [conn16] received client metadata from 127.0.0.1:54867 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T17:19:44.774+0800 I NETWORK  [conn16] end connection 127.0.0.1:54867 (0 connections now open)
+2018-04-13T17:19:50.518+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54885 #17 (1 connection now open)
+2018-04-13T17:19:50.519+0800 I NETWORK  [conn17] received client metadata from 127.0.0.1:54885 conn: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "3.6.3" }, os: { type: "Darwin", name: "Mac OS X", architecture: "x86_64", version: "17.4.0" } }
+2018-04-13T17:20:15.143+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54890 #18 (2 connections now open)
+2018-04-13T17:20:15.149+0800 I NETWORK  [conn18] received client metadata from 127.0.0.1:54890 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:20:15.156+0800 I NETWORK  [conn18] end connection 127.0.0.1:54890 (1 connection now open)
+2018-04-13T17:21:35.039+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:54928 #19 (2 connections now open)
+2018-04-13T17:21:35.045+0800 I NETWORK  [conn19] received client metadata from 127.0.0.1:54928 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:21:35.050+0800 I NETWORK  [conn19] end connection 127.0.0.1:54928 (1 connection now open)
+2018-04-13T17:27:16.061+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:55096 #20 (2 connections now open)
+2018-04-13T17:27:16.067+0800 I NETWORK  [conn20] received client metadata from 127.0.0.1:55096 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-13T17:27:16.084+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:55097 #21 (3 connections now open)
+2018-04-13T17:27:16.090+0800 I NETWORK  [conn21] end connection 127.0.0.1:55097 (2 connections now open)
+2018-04-13T17:27:16.108+0800 I NETWORK  [conn20] end connection 127.0.0.1:55096 (1 connection now open)
