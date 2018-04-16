@@ -24,6 +24,10 @@
   },
   "homepage": "https://github.com/sunxiuguo/MakingDream#readme",
   "dependencies": {
+    "bytes": "^3.0.0",
+    "cheerio": "^1.0.0-rc.2",
+    "eventproxy": "^1.0.0",
+    "express": "^4.16.3",
     "koa": "^2.5.0",
     "koa-compose": "^4.0.0",
     "koa-route": "^3.2.0",
@@ -34,7 +38,9 @@
     "mongoose": "^5.0.14",
     "mongoose-legacy-pluralize": "^1.0.2",
     "mpath": "^0.4.1",
+    "raw-body": "^2.3.2",
     "regexp-clone": "^0.0.1",
+    "superagent": "^3.8.2",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14"
   }

@@ -260,3 +260,6 @@
 2018-04-13T17:27:16.084+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:55097 #21 (3 connections now open)
 2018-04-13T17:27:16.090+0800 I NETWORK  [conn21] end connection 127.0.0.1:55097 (2 connections now open)
 2018-04-13T17:27:16.108+0800 I NETWORK  [conn20] end connection 127.0.0.1:55096 (1 connection now open)
+2018-04-14T03:50:41.828+0800 I COMMAND  [PeriodicTaskRunner] task: UnusedLockCleaner took: 105ms
+2018-04-15T22:22:32.228+0800 I NETWORK  [conn17] end connection 127.0.0.1:54885 (0 connections now open)
+2018-04-16T07:51:14.775+0800 I COMMAND  [PeriodicTaskRunner] task: UnusedLockCleaner took: 188ms
