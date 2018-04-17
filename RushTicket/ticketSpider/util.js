@@ -26,22 +26,46 @@ module.exports =  {
                     handleErr(err.message);
                     return;
                 }
-                
             })
     },
-    
-    async getStationName(){
+    /**
+     * 获取全国车站信息
+     * @param {function} callback 回调函数
+     */
+    async getStationName(callback){
         superagent.get(url.GET_STATION_NAME)
         .end(function(err,res){
-            console.log(JSON.stringify(res))
+            try{
+				let re = /\|[\u4e00-\u9fa5]+\|[A-Z]{3}\|\w+\|\w+\|\w+@\w+/g;
+                let allInfoArr = [];
+				let temp = JSON.stringify(res).match(re);
+				[].forEach.call(temp, function(item,i) {
+					let t = item.split("|");
+                    allInfoArr.push({
+                        name   : t[1],
+						code   : t[2],
+						pinyin : t[3],
+						short  : t[4],
+						other  : t[5]
+                    })
+				});
+                //todo 添加回调函数
+                if(callback) {
+                    callback(null, allInfoArr);
+				}
+			}catch(err){
+				console.log("In util.js getStationName error : "+err);
+			}
         })
     },
-
+    /**
+     * 登录，获取COOKIE
+     */
     async getCookie() {
         superagent.post(url.POST_LOGIN)
             .type('form')
             .send({
-                username: user.name,//todo set the username can config
+                username: user.name,
                 password: user.password,
                 appid: "otn",
             })
@@ -52,8 +76,9 @@ module.exports =  {
                     handleErr(err.message);
                     return;
                 }
-                cookie = res.header['set-cookie']; //从response中得到cookie
+                let cookie = res.header['set-cookie']; //从response中得到cookie
                 console.log('cookie = '+cookie)
+                return cookie;
                 //emitter.emit("setCookeie");
             })
     }
