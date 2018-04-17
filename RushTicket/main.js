@@ -5,12 +5,13 @@ const collectionName = "stations";
 
 ticketService.getStationName(function(err,data){
     db.collectionIfExist(dbName,collectionName,function(result){
-        //如果不存在名为collectionName的集合，则插入数据
+        //如果不存在名为collectionName的集合，则插入全国车站数据
         if(!result)
             db.insertMany(dbName,collectionName,data);
     })
         
 });
+ticketService.getTicketInfo({"date":"2018-04-18","fromStation":"VNP","endStation":"SHH","purposeCodes":"ADULT"});
 
 
 //db.drop(dbName,collectionName)
