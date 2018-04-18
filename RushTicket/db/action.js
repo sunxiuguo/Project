@@ -1,8 +1,8 @@
 const DBOptions = require('../config/dbConfig');
 const MongoClient = require('mongodb').MongoClient;
-let mongoConnect = DBOptions.MONGODB_CONNECT; //数据库连接地址
+const mongoConnect = DBOptions.MONGODB_CONNECT; //数据库连接地址
 //todo  已有数据库的日志记录，待添加node日志
-let action = {
+const action = {
     /**
      * 插入一条数据
      * @param {string} dbName 数据库名称

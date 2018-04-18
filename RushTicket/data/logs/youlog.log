@@ -588,3 +588,4 @@
 2018-04-18T15:00:46.954+0800 I NETWORK  [conn110] end connection 127.0.0.1:53690 (2 connections now open)
 2018-04-18T15:00:46.955+0800 I STORAGE  [conn111] createCollection: sunxiuguo.stations with generated UUID: 232445cb-04a3-4988-b856-8358fc6e61aa
 2018-04-18T15:00:47.051+0800 I NETWORK  [conn111] end connection 127.0.0.1:53691 (1 connection now open)
+2018-04-18T18:04:35.545+0800 I NETWORK  [conn23] end connection 127.0.0.1:58899 (0 connections now open)

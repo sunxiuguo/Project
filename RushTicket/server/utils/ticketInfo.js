@@ -1,10 +1,14 @@
+/**
+ * 此文件内容或许应该放到ticketController.js中
+ */
 const superagent = require('superagent');
-const url = require('../config/urlConfig');
-const user = require('../config/userConfig');
+const url = require('../../config/urlConfig');
+const user = require('../../config/userConfig');
+const util = require('./utilMethods')
 const fs = require('fs')
 
 
-let ticketService =  {
+const ticketService =  {
     /**
      * 获取车票信息
      * @param {object} ticketInfo 车票信息对象
@@ -27,6 +31,11 @@ let ticketService =  {
                     let resData = JSON.parse(res.text);
                     let Tickects = [];
                     let data = resData.data
+                    if(!data)
+                        resolve({
+                            msg : 'error',
+                            des : resData.messages
+                        })
                     let result = data.result
                     let flag = data.flag
                     let map = data.map
@@ -98,7 +107,7 @@ let ticketService =  {
                         })
                     });
                     //数据的写入需要异步处理
-                    await ticketService.writeFile('./data/stations.json',JSON.stringify(allInfoArr));
+                    await util.writeFile('./data/stations.json',JSON.stringify(allInfoArr));
                     resolve(allInfoArr)
                 }catch(err){
                     reject(err)
@@ -107,23 +116,6 @@ let ticketService =  {
         })
     },
     
-    
-    /**
-     * 创建并写入文件，如果存在文件则不操作
-     * @param {string} fileName 文件路径及名称
-     * @param {json} fileData 文件内容
-     */
-    async writeFile(fileName,fileData){
-        fs.exists(fileName,function(exists){
-            if(!exists){
-                fs.writeFile(fileName, fileData,  function(err) {
-                    if (err) 
-                        console.error(err)
-                    console.log(fileName+"数据写入成功！");
-                });
-            }
-        })
-    },
 
     /**
      * 打印车票信息
@@ -211,27 +203,7 @@ let ticketService =  {
         return code;
     },
 
-    /**
-     * 登录，获取COOKIE
-     */
-    getCookie() {
-        return new Promise((resolve,reject) =>{
-            superagent.post(url.POST_LOGIN)
-            .type('form')
-            .send({
-                username: user.name,
-                password: user.password,
-                appid: "otn",
-            })
-            .end(function(err, res) {
-                if (err)
-                    reject(err)
-                let cookie = res.header['set-cookie']; //从response中得到cookie
-                resolve(cookie)
-                //emitter.emit("setCookeie");
-            })
-        })
-    },
+   
     
     
 }
