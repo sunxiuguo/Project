@@ -1,0 +1,13 @@
+{
+  "description": "rush tickets",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "1255928173",
+  "projectname": "rushticket_fe",
+  "miniprogramRoot": "./dist"
+}
