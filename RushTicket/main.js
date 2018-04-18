@@ -1,4 +1,4 @@
-const ticketService = require('./service/util')
+const ticketService = require('./server/utils/ticketInfo')
 const db = require('./db/action')
 const dbName = "sunxiuguo";
 const collectionName = "stations";

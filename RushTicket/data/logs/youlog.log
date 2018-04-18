@@ -579,3 +579,12 @@
 2018-04-18T14:37:23.238+0800 I NETWORK  [conn108] end connection 127.0.0.1:63948 (2 connections now open)
 2018-04-18T14:37:23.240+0800 I STORAGE  [conn109] createCollection: sunxiuguo.stations with generated UUID: 7302a7eb-de1d-4e43-a121-029e95d2ce08
 2018-04-18T14:37:23.329+0800 I NETWORK  [conn109] end connection 127.0.0.1:63949 (1 connection now open)
+2018-04-18T15:00:42.951+0800 I COMMAND  [conn23] CMD: drop sunxiuguo.stations
+2018-04-18T15:00:42.957+0800 I STORAGE  [conn23] Finishing collection drop for sunxiuguo.stations (7302a7eb-de1d-4e43-a121-029e95d2ce08).
+2018-04-18T15:00:46.875+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53690 #110 (2 connections now open)
+2018-04-18T15:00:46.888+0800 I NETWORK  [conn110] received client metadata from 127.0.0.1:53690 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-18T15:00:46.903+0800 I NETWORK  [listener] connection accepted from 127.0.0.1:53691 #111 (3 connections now open)
+2018-04-18T15:00:46.905+0800 I NETWORK  [conn111] received client metadata from 127.0.0.1:53691 conn: { driver: { name: "nodejs", version: "3.0.6" }, os: { type: "Darwin", name: "darwin", architecture: "x64", version: "17.4.0" }, platform: "Node.js v9.10.1, LE, mongodb-core: 3.0.6" }
+2018-04-18T15:00:46.954+0800 I NETWORK  [conn110] end connection 127.0.0.1:53690 (2 connections now open)
+2018-04-18T15:00:46.955+0800 I STORAGE  [conn111] createCollection: sunxiuguo.stations with generated UUID: 232445cb-04a3-4988-b856-8358fc6e61aa
+2018-04-18T15:00:47.051+0800 I NETWORK  [conn111] end connection 127.0.0.1:53691 (1 connection now open)
