@@ -1,6 +1,9 @@
 # rushticket_fe
 
-> mpvue rush ticket
+> 基于mpvue创建的刷票小程序项目
+> 使用airbnb规范
+> 后台 : node koa2
+> 数据库 : mongodb
 
 ## Build Setup
 
