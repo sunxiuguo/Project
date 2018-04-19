@@ -1,28 +1,29 @@
-require('./check-versions')()
+require('./check-versions')();
+const config = require('../config');
+const middlewareHardDisk = require('webpack-dev-middleware-hard-disk');
 
-var config = require('../config')
 if (!process.env.NODE_ENV) {
-  process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
+  process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV);
 }
 
 // var opn = require('opn')
-var path = require('path')
-var express = require('express')
-var webpack = require('webpack')
-var proxyMiddleware = require('http-proxy-middleware')
-var portfinder = require('portfinder')
-var webpackConfig = require('./webpack.dev.conf')
+const path = require('path');
+const express = require('express');
+const webpack = require('webpack');
+const proxyMiddleware = require('http-proxy-middleware');
+const portfinder = require('portfinder');
+const webpackConfig = require('./webpack.dev.conf');
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
+const port = process.env.PORT || config.dev.port;
 // automatically open browser, if not set will be false
-var autoOpenBrowser = !!config.dev.autoOpenBrowser
+// const autoOpenBrowser = !!config.dev.autoOpenBrowser;
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable
+const proxyTable = config.dev.proxyTable;
 
-var app = express()
-var compiler = webpack(webpackConfig)
+const app = express();
+const compiler = webpack(webpackConfig);
 
 // var devMiddleware = require('webpack-dev-middleware')(compiler, {
 //   publicPath: webpackConfig.output.publicPath,
@@ -42,16 +43,16 @@ var compiler = webpack(webpackConfig)
 // })
 
 // proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
+Object.keys(proxyTable).forEach((context) => {
+  let options = proxyTable[context];
   if (typeof options === 'string') {
-    options = { target: options }
+    options = { target: options };
   }
-  app.use(proxyMiddleware(options.filter || context, options))
-})
+  app.use(proxyMiddleware(options.filter || context, options));
+});
 
 // handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')())
+app.use(require('connect-history-api-fallback')());
 
 // serve webpack bundle output
 // app.use(devMiddleware)
@@ -61,15 +62,15 @@ app.use(require('connect-history-api-fallback')())
 // app.use(hotMiddleware)
 
 // serve pure static assets
-var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
-app.use(staticPath, express.static('./static'))
+const staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory);
+app.use(staticPath, express.static('./static'));
 
 // var uri = 'http://localhost:' + port
 
-var _resolve
-var readyPromise = new Promise(resolve => {
-  _resolve = resolve
-})
+// let _resolve
+const readyPromise = new Promise(() => {
+  // _resolve = resolve;
+});
 
 // console.log('> Starting dev server...')
 // devMiddleware.waitUntilValid(() => {
@@ -81,26 +82,28 @@ var readyPromise = new Promise(resolve => {
 //   _resolve()
 // })
 
-module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = port
+module.exports = new Promise((resolve) => {
+  portfinder.basePort = port;
   portfinder.getPortPromise()
-  .then(newPort => {
-      if (port !== newPort) {
-        console.log(`${port}端口被占用，开启新端口${newPort}`)
-      }
-      var server = app.listen(newPort, 'localhost')
-      // for 小程序的文件保存机制
-      require('webpack-dev-middleware-hard-disk')(compiler, {
-        publicPath: webpackConfig.output.publicPath,
-        quiet: true
-      })
-      resolve({
-        ready: readyPromise,
-        close: () => {
-          server.close()
-        }
-      })
-  }).catch(error => {
-    console.log('没有找到空闲端口，请打开任务管理器杀死进程端口再试', error)
-  })
-})
+  .then((newPort) => {
+    if (port !== newPort) {
+      console.log(`${port}端口被占用，开启新端口${newPort}`);
+    }
+    const server = app.listen(newPort, '127.0.0.1', () => {
+      console.log(`app is running at ${newPort}`);
+    });
+    // for 小程序的文件保存机制
+    middlewareHardDisk(compiler, {
+      publicPath: webpackConfig.output.publicPath,
+      quiet: true,
+    });
+    resolve({
+      ready: readyPromise,
+      close: () => {
+        server.close();
+      },
+    });
+  }).catch(() => {
+    // console.log('没有找到空闲端口，请打开任务管理器杀死进程端口再试', error);
+  });
+});
