@@ -9,7 +9,7 @@
 	},
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "1255928173",
+	"appid": "wx2ad67638f15b4b92",
 	"projectname": "rushticket_fe",
 	"condition": {
 		"search": {
