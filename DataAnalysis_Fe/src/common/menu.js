@@ -138,7 +138,7 @@ const menuData = [
     name: '账户',
     icon: 'user',
     path: 'user',
-    authority: 'guest',
+    // authority: 'guest', 权限控制
     children: [
       {
         name: '登录',
@@ -151,6 +151,22 @@ const menuData = [
       {
         name: '注册结果',
         path: 'register-result',
+      },
+    ],
+  },
+  {
+    name: '配置',
+    icon: 'setting',
+    path: 'config',
+    // authority: 'guest', 权限控制
+    children: [
+      {
+        name: '接口配置',
+        path: 'url',
+      },
+      {
+        name: '数据项配置',
+        path: 'table',
       },
     ],
   },

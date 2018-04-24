@@ -44,15 +44,20 @@ const CreateForm = Form.create()(props => {
   };
   return (
     <Modal
-      title="新建规则"
+      title="添加接口地址"
       visible={modalVisible}
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="接口地址">
+        {form.getFieldDecorator('url', {
+          rules: [{ required: true, message: '请输入接口地址' }],
+        })(<Input placeholder="请输入接口地址" />)}
+      </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
         {form.getFieldDecorator('desc', {
-          rules: [{ required: true, message: 'Please input some description...' }],
-        })(<Input placeholder="请输入" />)}
+          rules: [{ required: true, message: '请输入接口描述' }],
+        })(<Input placeholder="请输入接口描述" />)}
       </FormItem>
     </Modal>
   );

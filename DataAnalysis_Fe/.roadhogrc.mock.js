@@ -7,8 +7,12 @@ import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
 
+const host = '127.0.0.1';
+const port = 3000;
+const hostWithPort = host +":" + port;
+
 // 是否禁用代理
-const noProxy = process.env.NO_PROXY === 'true';
+const noProxy = process.env.NO_PROXY === 'true'; //true
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 const proxy = {
@@ -138,3 +142,7 @@ const proxy = {
 };
 
 export default (noProxy ? {} : delay(proxy, 1000));
+
+// export default {
+//   'GET /api/(.*)': 'http://localhost:3000/api/',
+// };

@@ -1,14 +1,17 @@
-const config = {
-
-  port: 3001,
-
-  database: {
-    DATABASE: 'koa_demo',
-    USERNAME: 'root',
-    PASSWORD: 'abc123',
-    PORT: '3306',
-    HOST: 'localhost'
+const options = {
+    database:{
+        //数据库连接地址
+        MONGODB_CONNECT:'mongodb://127.0.0.1:27017/'
+    },
+    user:{
+        name : "zhujia@myhug.cn",
+        password : "jongsuk0914@"
+    },
+    url:{
+        //登录,获取COOKIE
+        POST_LOGIN: 'https://auth.myhug.cn/user/login',
+    }
+    
   }
-}
-
-module.exports = config
+  
+  module.exports = options
