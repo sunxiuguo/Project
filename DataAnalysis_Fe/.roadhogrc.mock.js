@@ -7,7 +7,7 @@ import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
 
-const host = '127.0.0.1';
+const host = 'http://localhost';
 const port = 3000;
 const hostWithPort = host +":" + port;
 
@@ -141,8 +141,10 @@ const proxy = {
   },
 };
 
-export default (noProxy ? {} : delay(proxy, 1000));
+//export default (noProxy ? {} : delay(proxy, 1000));
 
-// export default {
-//   'GET /api/(.*)': 'http://localhost:3000/api/',
-// };
+export default noProxy ? {
+  'GET /api/(.*)': hostWithPort+'/api/',
+  'POST /api/(.*)': hostWithPort+'/api/',
+  'DELETE /api/(.*)': hostWithPort+'/api/',
+} : delay(proxy, 1000);

@@ -1,6 +1,6 @@
-const DBOptions = require('../config/dbConfig');
+const Options = require('../../config');
 const MongoClient = require('mongodb').MongoClient;
-const mongoConnect = DBOptions.MONGODB_CONNECT; //数据库连接地址
+const mongoConnect = Options.database.MONGODB_CONNECT; //数据库连接地址
 //todo  已有数据库的日志记录，待添加node日志
 const action = {
     /**
@@ -79,8 +79,8 @@ const action = {
                 dbo.collection(collectionName). find(filter).toArray(function(err, result) {
                     if (err) 
                         reject(err)
-                    console.log(`${remark ? remark : ""}`)
-                    console.log(result)
+                    //console.log(`${remark ? remark : ""}`)
+                    //console.log(result)
                     resolve(result)
                     db.close();
                 });
@@ -125,6 +125,7 @@ const action = {
      * @param {string} collectionName 集合名称
      * @param {Object} filter 查询条件 格式为 { type: "en" }
      * @param {string} remark 可选：数据操作备注
+     * @returns {number} 返回删除的条数
      */
     delete(dbName,collectionName,filter,remark){
         return new Promise((resolve , reject ) =>{
@@ -141,7 +142,7 @@ const action = {
                         ${obj.result.n}条文档被删除,删除条件为${JSON.stringify(filter)}
                         ${remark ? remark : ""}
                     `);
-                    resolve(obj)
+                    resolve(obj.result.n)
                     db.close();
                 });
             })
@@ -200,6 +201,16 @@ const action = {
                 });
             });
         })
+    },
+    /**
+     * 获取表中的记录总数
+     * @param {string} dbName 数据库名称
+     * @param {string} collectionName 表名
+     */
+    async getColContentCount(dbName,collectionName){
+        const resultList = await this.select(dbName,collectionName,{});
+        const count = resultList.length;
+        return count;
     },
 
 

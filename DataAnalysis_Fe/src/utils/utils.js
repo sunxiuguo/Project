@@ -159,3 +159,18 @@ const reg = /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-
 export function isUrl(path) {
   return reg.test(path);
 }
+
+export function getDateString(format,dateTime){
+  const date = new Date(dateTime);
+  const Y = date.getFullYear();
+  const M = (date.getMonth()+1 < 10 ? `0${(date.getMonth()+1).toString()}` : date.getMonth()+1);
+  const D = date.getDate() < 10 ? `0${date.getDate().toString()}` : date.getDate();
+  let result = "";
+  switch(format.toLowerCase()){
+    case "yyyymmdd" : result = Y+M+D;break;
+    case "yyyy-mm-dd" : result = `${Y}-${M}-${D}`;break;
+    case "yyyy/mm/dd" : result = `${Y}/${M}/${D}`;break;
+    default : result = Y+M+D;break;
+  }
+  return result;
+}

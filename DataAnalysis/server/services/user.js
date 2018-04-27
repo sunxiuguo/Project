@@ -1,0 +1,1 @@
+const InterfaceModel = require('../models/user')

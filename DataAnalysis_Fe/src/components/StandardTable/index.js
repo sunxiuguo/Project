@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { Table, Alert } from 'antd';
+import { connect } from 'dva';
 import styles from './index.less';
 
 function initTotalList(columns) {
@@ -12,7 +13,11 @@ function initTotalList(columns) {
   return totalList;
 }
 
-class StandardTable extends PureComponent {
+@connect(({ url, loading }) => ({
+  url,
+  loading: loading.models.url,
+}))
+export default class StandardTable extends PureComponent {
   constructor(props) {
     super(props);
     const { columns } = props;
@@ -64,6 +69,7 @@ class StandardTable extends PureComponent {
   render() {
     const { selectedRowKeys, needTotalList } = this.state;
     const { data: { list, pagination }, loading, columns, rowKey } = this.props;
+
 
     const paginationProps = {
       showSizeChanger: true,
@@ -117,4 +123,5 @@ class StandardTable extends PureComponent {
   }
 }
 
-export default StandardTable;
+
+

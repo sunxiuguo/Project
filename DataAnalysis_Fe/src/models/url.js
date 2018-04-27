@@ -15,14 +15,14 @@ export default {
       const response = yield call(query, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(add, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
       if (callback) callback();
     },
@@ -30,7 +30,7 @@ export default {
       const response = yield call(remove, payload);
       yield put({
         type: 'save',
-        payload: response,
+        payload: response.data,
       });
       if (callback) callback();
     },
@@ -43,5 +43,7 @@ export default {
         data: action.payload,
       };
     },
+
+
   },
 };

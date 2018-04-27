@@ -21,8 +21,9 @@ import {
 } from 'antd';
 import StandardTable from 'components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-
+// import { getDateString } from '../../utils/utils';
 import styles from './UrlList.less';
+
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -63,9 +64,10 @@ const CreateForm = Form.create()(props => {
   );
 });
 
-@connect(({ url, loading }) => ({
+@connect(({ url, loading, user }) => ({
   url,
   loading: loading.models.url,
+  currentUser:user.currentUser,
 }))
 @Form.create()
 export default class TableList extends PureComponent {
@@ -138,7 +140,7 @@ export default class TableList extends PureComponent {
         dispatch({
           type: 'url/remove',
           payload: {
-            no: selectedRows.map(row => row.no).join(','),
+            key: selectedRows.map(row => row.key).join(','),
           },
           callback: () => {
             this.setState({
@@ -150,6 +152,7 @@ export default class TableList extends PureComponent {
       default:
         break;
     }
+
   };
 
   handleSelectRows = rows => {
@@ -193,6 +196,9 @@ export default class TableList extends PureComponent {
       type: 'url/add',
       payload: {
         description: fields.desc,
+        url:fields.url,
+        createdBy:this.props.currentUser.name,
+        createdTime:moment().format('YYYY-MM-DD HH:mm:ss'),
       },
     });
 
@@ -319,24 +325,26 @@ export default class TableList extends PureComponent {
   render() {
     const { url: { data }, loading } = this.props;
     const { selectedRows, modalVisible } = this.state;
-
     const columns = [
       {
-        title: '规则编号',
-        dataIndex: 'no',
+        title:'编号',
+        dataIndex:'key',
+      },
+      {
+        title:'接口地址',
+        dataIndex:'url',
       },
       {
         title: '描述',
         dataIndex: 'description',
       },
       {
-        title: '服务调用次数',
-        dataIndex: 'callNo',
-        sorter: true,
-        align: 'right',
-        render: val => `${val} 万`,
-        // mark to display a total number
-        needTotal: true,
+        title:'创建人',
+        dataIndex:'createdBy',
+      },
+      {
+        title:'创建时间',
+        dataIndex:'createdTime',
       },
       {
         title: '状态',

@@ -1,12 +1,18 @@
 const Koa = require('koa')
-const Router = require('koa-router')
-const routerFe = require('../router')
+const router = require('../router')
+const bodyParser = require('koa-bodyparser')
 const app = new Koa()
 const HOST = '127.0.0.1'
 const PORT = process.env.PORT || 3000
 
-app.use(require('./utils/responseMiddle'))
-app.use(routerFe.routes()).use(routerFe.allowedMethods())
+//  统一请求响应中间件
+// app.use(require('./utils/responseMiddle'))
+
+// 解析Post body请求数据中间件
+app.use(bodyParser())
+
+app.use(router.routes())
+app.use(router.allowedMethods())
 
 app.listen(PORT,()=>{
     console.log(`App listening on port ${PORT}`)

@@ -49,11 +49,6 @@ const CreateForm = Form.create()(props => {
       onOk={okHandle}
       onCancel={() => handleModalVisible()}
     >
-      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="接口地址">
-        {form.getFieldDecorator('url', {
-          rules: [{ required: true, message: '请输入接口地址' }],
-        })(<Input placeholder="请输入接口地址" />)}
-      </FormItem>
       <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="描述">
         {form.getFieldDecorator('desc', {
           rules: [{ required: true, message: '请输入接口描述' }],
