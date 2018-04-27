@@ -1,0 +1,5 @@
+DataAnalysis/data/
+DataAnalysis/dist/
+DataAnalysis/logs/
+DataAnalysis/node_modules/
+DataAnalysis/config.js
