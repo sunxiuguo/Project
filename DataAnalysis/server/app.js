@@ -6,7 +6,7 @@ const HOST = '127.0.0.1'
 const PORT = process.env.PORT || 3000
 
 //  统一请求响应中间件
-// app.use(require('./utils/responseMiddle'))
+app.use(require('./utils/responseMiddle'))
 
 // 解析Post body请求数据中间件
 app.use(bodyParser())

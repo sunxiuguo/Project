@@ -15,9 +15,7 @@ import {
   InputNumber,
   DatePicker,
   Modal,
-  message,
   Badge,
-  Divider,
 } from 'antd';
 import StandardTable from 'components/StandardTable';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
@@ -31,8 +29,8 @@ const getValue = obj =>
   Object.keys(obj)
     .map(key => obj[key])
     .join(',');
-const statusMap = ['default', 'processing', 'success', 'error'];
-const status = ['关闭', '运行中', '已上线', '异常'];
+// const statusMap = ['processing', 'error'];
+// const status = ['正常', '异常'];
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
@@ -199,14 +197,31 @@ export default class TableList extends PureComponent {
         url:fields.url,
         createdBy:this.props.currentUser.name,
         createdTime:moment().format('YYYY-MM-DD HH:mm:ss'),
+        updatedAt:"",
       },
     });
 
-    message.success('添加成功');
+    // notification.success({
+    //   message:`真棒！`,
+    //   description:`成功添加新的接口地址！`,
+    // });
     this.setState({
       modalVisible: false,
     });
   };
+
+  handleGetData = key =>{
+    this.props.dispatch({
+      type:'url/patch',
+      payload: {
+        key,
+      },
+    })
+    // notification.success({
+    //   message:`真棒！`,
+    //   description:`成功拉取数据！`,
+    // });
+  }
 
   renderSimpleForm() {
     const { getFieldDecorator } = this.props.form;
@@ -349,42 +364,33 @@ export default class TableList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'status',
-        filters: [
-          {
-            text: status[0],
-            value: 0,
-          },
-          {
-            text: status[1],
-            value: 1,
-          },
-          {
-            text: status[2],
-            value: 2,
-          },
-          {
-            text: status[3],
-            value: 3,
-          },
-        ],
-        onFilter: (value, record) => record.status.toString() === value,
-        render(val) {
-          return <Badge status={statusMap[val]} text={status[val]} />;
+        // filters: [
+        //   {
+        //     text: status[0],
+        //     value: 0,
+        //   },
+        //   {
+        //     text: status[1],
+        //     value: 1,
+        //   },
+        // ],
+        // onFilter: (value, record) => record.status.toString() === value,
+        // render(val) {
+        //   return <Badge status={statusMap[val]} text={status[val]} />;
+        // },
+        render() {
+          return <Badge status="processing" text="正常" />;
         },
       },
       {
-        title: '更新时间',
+        title: '最近数据获取时间',
         dataIndex: 'updatedAt',
-        sorter: true,
-        render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>,
       },
       {
         title: '操作',
-        render: () => (
+        render: (record) => (
           <Fragment>
-            <a href="">配置</a>
-            <Divider type="vertical" />
-            <a href="">订阅警报</a>
+            <a onClick={()=>this.handleGetData(record.key)}>获取数据</a>
           </Fragment>
         ),
       },
@@ -393,7 +399,6 @@ export default class TableList extends PureComponent {
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
-        <Menu.Item key="approval">批量审批</Menu.Item>
       </Menu>
     );
 

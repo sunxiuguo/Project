@@ -1,4 +1,4 @@
-import { query, add, remove } from '../services/url';
+import { query, add, remove, patch } from '../services/url';
 
 export default {
   namespace: 'url',
@@ -28,6 +28,14 @@ export default {
     },
     *remove({ payload, callback }, { call, put }) {
       const response = yield call(remove, payload);
+      yield put({
+        type: 'save',
+        payload: response.data,
+      });
+      if (callback) callback();
+    },
+    *patch({ payload, callback }, { call, put }) {
+      const response = yield call(patch, payload);
       yield put({
         type: 'save',
         payload: response.data,

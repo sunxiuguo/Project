@@ -8,59 +8,34 @@ const InterfaceService = require('../services/interface')
 
 const InterfaceController = {
     async getInterfaceInfo(ctx,next){
-        // const user = ctx.session.user;
-        // if(!user)
-        //     return ctx.error({msg : '用户未登陆'})
-        try{
-            let reponseBody = {
-                status:"",
-                code:"",
-                msg:"",
-                data:{
-                    list:[],
-                    pagination:{}
-                }
-            }
-            const requestBody = ctx.request.query;
-            const interfaceList = await InterfaceService.getInterfaceInfo(requestBody);
-            reponseBody.status = "success";
-            reponseBody.data.list = interfaceList;
-            reponseBody.data.pagination.total = interfaceList.length;
-            if(interfaceList){
-                reponseBody.data.pagination.pageSize = 10; //每页显示的条数
-                reponseBody.data.pagination.current = 1; //当前页码
-            }
-            ctx.body = reponseBody;
-            await next();
-        }catch(e){
-            ctx.body = {
-                status : "error",
-                code : "",
-                msg : "",
-                data : {
-                    list:[],
-                    pagination:{
-                        total:0
-                    }
-                }
-            }
-            
-        }
-        
+        const requestBody = ctx.request.query;
+        const data = await InterfaceService.getInterfaceInfo(requestBody);
+        return ctx.success({data});       
     },
     async postInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;
-        const reponseBody = await InterfaceService.postInterfaceInfo(requestBody);
-        ctx.body = reponseBody;
-        await next();
+        const result = await InterfaceService.postInterfaceInfo(requestBody);
+        const data = await InterfaceService.getInterfaceInfo({});
+        if(!result)
+            return ctx.error({data});
+        return ctx.success({data});
     },
     async deleteInterfaceInfo(ctx,next){
-        //ctx.session = null;
         const requestBody = ctx.request.body;
-        const reponseBody = await InterfaceService.deleteInterfaceInfo(requestBody);
-        ctx.body = reponseBody;
-        await next();
+        const result = await InterfaceService.deleteInterfaceInfo(requestBody);
+        const data = await InterfaceService.getInterfaceInfo({});
+        if(!result)
+            return ctx.error({data});
+        return ctx.success({data});
     },
+    async getDataByInterface(ctx,next){
+        const requestBody = ctx.request.body;
+        const result = await InterfaceService.getDataByInterface(requestBody);
+        const data = await InterfaceService.getInterfaceInfo({});
+        if(!result)
+            return ctx.error({data});
+        return ctx.success({data});
+    }
     
 }
 

@@ -24,3 +24,14 @@ export async function add(params) {
     },
   });
 }
+
+export async function patch(params) {
+  return request(`/api/url/patch`, {
+    method: 'PATCH',
+    body: {
+      ...params,
+      // method: 'post',
+    },
+  });
+}
+

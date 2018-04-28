@@ -11,12 +11,30 @@
 */ 
 
 module.exports = async (ctx, next) => {
-    ctx.error = ({ data, msg, status,error }) => {
-       ctx.status= status||400;
-       ctx.body = { code: -200, msg, data, error };
+    let responseBody = {
+        status:"success",
+        code:"",
+        msg:"",
+        data:{
+            list:[],
+            pagination:{}
+        }
     }
-    ctx.success = ({ data, msg }) => {
-        ctx.body = { code: 200, msg, data };
+    ctx.error = ({ data,result }) => {
+        responseBody.data.list = data;
+        responseBody.data.pagination.total = data.length;
+        responseBody.status = "error";
+       ctx.body = responseBody;
+    }
+    ctx.success = ({ data, result }) => {
+        responseBody.data.list = data;
+        responseBody.data.pagination.total = data.length;
+        if(data){
+            responseBody.data.pagination.pageSize = 10; //每页显示的条数
+            responseBody.data.pagination.current = 1; //当前页码
+        }
+        responseBody.status = "success";
+        ctx.body = responseBody;
     }
     await next()
 }

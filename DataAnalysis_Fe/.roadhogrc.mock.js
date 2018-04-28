@@ -147,4 +147,5 @@ export default noProxy ? {
   'GET /api/(.*)': hostWithPort+'/api/',
   'POST /api/(.*)': hostWithPort+'/api/',
   'DELETE /api/(.*)': hostWithPort+'/api/',
+  'PATCH /api/(.*)': hostWithPort+'/api/',
 } : delay(proxy, 1000);
