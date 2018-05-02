@@ -22,7 +22,7 @@ const InterfaceController = {
     },
     async deleteInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;
-        const result = await InterfaceService.deleteInterfaceInfo(requestBody);
+        const result = await InterfaceService.deleteManyInterfaceInfo(requestBody);
         const data = await InterfaceService.getInterfaceInfo({});
         if(!result)
             return ctx.error({data});
