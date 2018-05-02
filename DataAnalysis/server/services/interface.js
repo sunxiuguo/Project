@@ -1,5 +1,6 @@
 const InterfaceModel = require('../models/interface');
 const DateTime = require('../utils/datetime');
+const util = require('../utils/utilMethods');
 
 const interfaceInfo ={
     async getInterfaceInfo( params ){
@@ -33,8 +34,11 @@ const interfaceInfo ={
     async getDataByInterface( params ){
         // 更新 updatedAt 字段
         let dateTimeNow = DateTime.getNowDatetime();
-        let updateObj = {updatedAt:dateTimeNow};
-        let result = await InterfaceModel.patchInterfaceInfo(updateObj,params);
+        let updateObj = {updatedAt:dateTimeNow,html:""};
+        let htmlData = await util.getDataByUrl(params.url);
+        updateObj.html = htmlData;
+        console.log(JSON.stringify(updateObj))
+        let result = await InterfaceModel.patchInterfaceInfo(updateObj,{key:params.key});
     },
 
 }

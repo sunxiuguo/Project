@@ -210,11 +210,12 @@ export default class TableList extends PureComponent {
     });
   };
 
-  handleGetData = key =>{
+  handleGetData = record =>{
     this.props.dispatch({
       type:'url/patch',
       payload: {
-        key,
+        key:record.key,
+        url:record.url,
       },
     })
     // notification.success({
@@ -390,7 +391,7 @@ export default class TableList extends PureComponent {
         title: '操作',
         render: (record) => (
           <Fragment>
-            <a onClick={()=>this.handleGetData(record.key)}>获取数据</a>
+            <a onClick={()=>this.handleGetData(record)}>获取数据</a>
           </Fragment>
         ),
       },

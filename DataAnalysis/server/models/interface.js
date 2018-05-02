@@ -24,6 +24,7 @@ const interfaceInfo = {
             $set:{}
         };
         formatData["$set"] = updateData;
+        console.log(JSON.stringify(formatData))
         const patchResult = await db.update(dbName,colName,formatData,filter);
         return patchResult;
     }

@@ -27,7 +27,6 @@ const util = {
         return new Promise((resolve,reject) =>{
             superagent.post(options.url.POST_LOGIN)
             .type('form')
-            //.set('Cookie', ServerCookie)
             .send({
                 account: options.user.name,
                 password: options.user.password,
@@ -36,12 +35,7 @@ const util = {
                 if (err)
                     reject(err)
                 let cookie = res.header['set-cookie']; //从response中得到cookie
-                let sessionNew = cookie.split(';')[0].split('=')[1];
-                let sessionOld = localStorage.getItem('session');
-                if(sessionNew !== sessionOld)
-                    localStorage.setItem('session',sessionNew)
-                resolve(session)
-                //emitter.emit("setCookie");
+                resolve(cookie)
             })
         })
     },
@@ -59,7 +53,20 @@ const util = {
                 return false
         }
         return true
-    }
+    },
+    async getDataByUrl( url ){
+        let cookie = await this.getCookie();
+        return new Promise((resolve,reject) =>{
+            superagent.get(url)
+            .set('Cookie', cookie)
+            //.query({order:'desc'}) 查询字符串
+            .end(function(err, res) {
+                if (err)
+                    reject(err)
+                resolve(res.text)
+            })
+        })
+    },
 
 
 
