@@ -88,7 +88,7 @@ const util = {
                 // htmlTable转换为json
                 let tableHtml = cheerio.load($(this).html());
                 cheerioTableparser(tableHtml);
-                let data = tableHtml("table").parsetable();
+                let data = tableHtml("table").parsetable(true,true,false);
                 // 去掉a标签
                 data = data.map(function(arr){
                     return arr.map(function(item){
