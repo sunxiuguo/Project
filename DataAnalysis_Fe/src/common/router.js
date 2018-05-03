@@ -171,8 +171,8 @@ export const getRouterData = app => {
     '/config/url': {
       component: dynamicWrapper(app, ['url'], () => import('../routes/Config/UrlList')),
     },
-    '/config/table': {
-      component: dynamicWrapper(app, [], () => import('../routes/Config/Table')),
+    '/config/sourceTree': {
+      component: dynamicWrapper(app, [], () => import('../routes/Config/SourceTree')),
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),

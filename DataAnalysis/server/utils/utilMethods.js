@@ -1,6 +1,8 @@
 const superagent = require('superagent');
 const options = require('../../config');
-const fs = require('fs')
+const fs = require('fs');
+const cheerio = require('cheerio');
+const cheerioTableparser = require('cheerio-tableparser');;
 
 const util = {
     /**
@@ -54,6 +56,11 @@ const util = {
         }
         return true
     },
+    /**
+     * 根据Url获取网页数据
+     * @param {*} url 
+     * @returns {html} 返回Html格式text
+     */
     async getDataByUrl( url ){
         let cookie = await this.getCookie();
         return new Promise((resolve,reject) =>{
@@ -67,6 +74,38 @@ const util = {
             })
         })
     },
+    /**
+     * 将Html table转换为Json格式数据
+     * @param {*} htmlTable 
+     * @return json数据
+     */
+    async mapHtmlTableToJSON( html ){
+        const $ = cheerio.load(html);
+        let resultJson = {};
+        $('.dtable_title').each(function(indexTitle){
+            let title = $(this).text();
+            $('.dtable_body').each(function(indexBody){
+                // htmlTable转换为json
+                let tableHtml = cheerio.load($(this).html());
+                cheerioTableparser(tableHtml);
+                let data = tableHtml("table").parsetable();
+                // 去掉a标签
+                data = data.map(function(arr){
+                    return arr.map(function(item){
+                        if(item.indexOf('<a') > -1)
+                            item = cheerio.load(item).text();
+                        return item;
+                    })
+                })
+                // 将title和Body匹配
+                if(indexTitle === indexBody)
+                    resultJson[title] = data;
+            })
+        });
+        return resultJson; 
+        
+    },
+
 
 
 

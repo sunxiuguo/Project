@@ -5,6 +5,11 @@ const util = require('../utils/utilMethods');
 const interfaceInfo ={
     async getInterfaceInfo( params ){
         let interfaceList = await InterfaceModel.getInterfaceInfo(params);
+        //组织Html数据,转换成Json格式
+        for(let obj of interfaceList){
+            let jsonTable = await util.mapHtmlTableToJSON(obj.html);
+            obj.html = jsonTable;
+        }
         return interfaceList;
     },
 
@@ -32,12 +37,11 @@ const interfaceInfo ={
         return resultAll;
     },
     async getDataByInterface( params ){
-        // 更新 updatedAt 字段
+        // 更新 updatedAt html字段
         let dateTimeNow = DateTime.getNowDatetime();
         let updateObj = {updatedAt:dateTimeNow,html:""};
         let htmlData = await util.getDataByUrl(params.url);
         updateObj.html = htmlData;
-        console.log(JSON.stringify(updateObj))
         let result = await InterfaceModel.patchInterfaceInfo(updateObj,{key:params.key});
     },
 

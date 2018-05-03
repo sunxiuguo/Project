@@ -166,7 +166,7 @@ const menuData = [
       },
       {
         name: '数据项配置',
-        path: 'table',
+        path: 'sourceTree',
       },
     ],
   },
