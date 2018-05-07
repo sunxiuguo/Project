@@ -1,4 +1,4 @@
-import { query, add, remove, patch } from '../services/url';
+import { query, add, remove, patch, queryTree, patchTree } from '../services/url';
 
 export default {
   namespace: 'url',
@@ -8,11 +8,19 @@ export default {
       list: [],
       pagination: {},
     },
+    checkedKeys:[],
   },
 
   effects: {
     *fetch({ payload }, { call, put }) {
       const response = yield call(query, payload);
+      yield put({
+        type: 'save',
+        payload: response.data,
+      });
+    },
+    *fetchTree({ payload }, { call, put }) {
+      const response = yield call(queryTree, payload);
       yield put({
         type: 'save',
         payload: response.data,
@@ -42,6 +50,14 @@ export default {
       });
       if (callback) callback();
     },
+    *patchTree({ payload, callback }, { call, put }) {
+      const response = yield call(patchTree, payload);
+      yield put({
+        type: 'saveTree',
+        payload: response.data,
+      });
+      if (callback) callback();
+    },
   },
 
   reducers: {
@@ -49,6 +65,12 @@ export default {
       return {
         ...state,
         data: action.payload,
+      };
+    },
+    saveTree(state, action) {
+      return {
+        ...state,
+        checkedKeys: action.payload,
       };
     },
 

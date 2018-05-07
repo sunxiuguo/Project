@@ -3,3 +3,11 @@ DataAnalysis/dist/
 DataAnalysis/logs/
 DataAnalysis/node_modules/
 DataAnalysis/config.js
+DataAnalysis/data/logs/youlog.log
+DataAnalysis/data/mongodb/WiredTiger.turtle
+DataAnalysis/data/mongodb/WiredTiger.wt
+DataAnalysis/data/mongodb/sizeStorer.wt
+DataAnalysis/data/mongodb/DataAnalysisBB/collection-4--167865523175075345.wt
+DataAnalysis/data/mongodb/DataAnalysisBB/index-5--167865523175075345.wt
+DataAnalysis/data/mongodb/diagnostic.data/metrics.interim
+DataAnalysis/node_modules/.npminstall.done

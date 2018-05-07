@@ -2,7 +2,8 @@ const superagent = require('superagent');
 const options = require('../../config');
 const fs = require('fs');
 const cheerio = require('cheerio');
-const cheerioTableparser = require('cheerio-tableparser');;
+const cheerioTableparser = require('cheerio-tableparser');
+
 
 const util = {
     /**
@@ -102,8 +103,63 @@ const util = {
                     resultJson[title] = data;
             })
         });
-        return resultJson; 
-        
+        return resultJson;   
+    },
+    /**
+     * 将原有的查询结果去掉数据，只留下列名
+     * @param {*} listData 
+     */
+    async renderColumns( listData ){
+        let tableCols = [];
+        let colData = listData.map(function(interfaceItem){
+            for(let key in interfaceItem.html){
+                interfaceItem.html[key] = util.renderTreeData(
+                        interfaceItem.html[key].map(function(htmlItem){
+                            let cols = htmlItem.filter((value,index) => index<2);
+                            let colObj = {
+                                head:key,
+                                first:cols[0],
+                                second:cols[1],
+                                text:""
+                            };
+                            tableCols.push(colObj);
+                            return cols;
+                        })
+                    );
+                }
+            return interfaceItem;
+        });
+        return {data:colData,cols:tableCols};
+    },
+    /**
+     * 将列的二维数组转换为树结构
+     * @param {*} list 
+     */
+    renderTreeData(list){
+        let tree = [];
+        let treeObj = {};
+        let firstKey = "";
+        list.map(function(item){
+            if(item[0] !== firstKey ){
+                if(JSON.stringify(treeObj)!== "{}")
+                    tree.push(treeObj);
+                treeObj = {};
+                treeObj.title = item[0]; // ALL
+                treeObj.key = item[0]; // ALL
+                treeObj.children = [];
+                treeObj.children.push({
+                    title:item[1],
+                    key:`${item[0]}-${item[1]}`,
+                })
+                firstKey = item[0];
+            }else{
+                treeObj.children.push({
+                    title:item[1],
+                    key:`${item[0]}-${item[1]}`,
+                })
+            }   
+        })
+        return tree;
     },
 
 

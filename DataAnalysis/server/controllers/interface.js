@@ -12,6 +12,11 @@ const InterfaceController = {
         const data = await InterfaceService.getInterfaceInfo(requestBody);
         return ctx.success({data});       
     },
+    async getInterfaceTreeInfo(ctx,next){
+        const requestBody = ctx.request.query;
+        const data = await InterfaceService.getInterfaceTreeInfo(requestBody);
+        return ctx.success({data});       
+    },
     async postInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;
         const result = await InterfaceService.postInterfaceInfo(requestBody);

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import React,{ Fragment } from 'react';
 
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
@@ -173,4 +174,16 @@ export function getDateString(format,dateTime){
     default : result = Y+M+D;break;
   }
   return result;
+}
+/**
+ * react html转义
+ * @param {*} text
+ */
+export function showhtml(text){
+  const html = {__html:text};
+return (
+  <Fragment>
+    <span dangerouslySetInnerHTML={html} />
+  </Fragment>
+  ) ;
 }

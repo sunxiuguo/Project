@@ -5,6 +5,10 @@ export async function query(params) {
   return request(`/api/url/query?${stringify(params)}`);
 }
 
+export async function queryTree(params) {
+  return request(`/api/url/queryTree?${stringify(params)}`);
+}
+
 export async function remove(params) {
   return request(`/api/url/remove`, {
     method: 'DELETE',
@@ -35,3 +39,12 @@ export async function patch(params) {
   });
 }
 
+export async function patchTree(params) {
+  return request(`/api/url/patchTree`, {
+    method: 'PATCH',
+    body: {
+      ...params,
+      // method: 'post',
+    },
+  });
+}

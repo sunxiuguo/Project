@@ -12,6 +12,7 @@ const router = require('koa-router')();
 router 
 // 接口地址相关api
 .get('/api/url/query',InterfaceController.getInterfaceInfo)                         // 获取接口地址列表
+.get('/api/url/queryTree',InterfaceController.getInterfaceTreeInfo)                         // 获取接口地址列表
 .post('/api/url/add',InterfaceController.postInterfaceInfo)                         // 新增接口地址
 .del('/api/url/remove',InterfaceController.deleteInterfaceInfo)                     // 删除接口地址
 .patch('/api/url/patch',InterfaceController.getDataByInterface)                     // 拉取接口地址的数据
