@@ -2,6 +2,7 @@ const InterfaceModel = require('../models/interface');
 const DateTime = require('../utils/datetime');
 const util = require('../utils/utilMethods');
 const db = require('../utils/db-util');
+const options = require('../../config');
 const { database:{ MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME, COLLECTION_COLUMNS_NAME } } = options;
 
 const interfaceInfo ={
