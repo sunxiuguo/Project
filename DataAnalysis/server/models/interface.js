@@ -1,7 +1,5 @@
 const db = require('../utils/db-util');
-const options = require('../../config');
-const { database:{ MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME, COLLECTION_COLUMNS_NAME } } = options;
-
+const util = require('../utils/utilMethods');
 
 const interfaceInfo = {
     /**
@@ -10,8 +8,8 @@ const interfaceInfo = {
      * @param {any} params 
      * @returns 
      */
-    async getInterfaceInfo(params){
-        let interfaceInfo = await db.select(MONGODB_DATABASE_NAME,COLLECTION_INTERFACE_NAME,params);
+    async getInterfaceInfo(dbName,collectionName,params){
+        let interfaceInfo = await db.select(dbName,collectionName,params);
         return interfaceInfo;
     },
     /**
@@ -20,11 +18,11 @@ const interfaceInfo = {
      * @param {any} params 
      * @returns 
      */
-    async postInterfaceInfo(params){
+    async postInterfaceInfo(dbName,collectionName,params){
         // 插入自增唯一标识key
-        let count = await db.getColContentCount(MONGODB_DATABASE_NAME,COLLECTION_INTERFACE_NAME);
+        let count = await db.getColContentCount(dbName,collectionName);
         params.key = (count + 1).toString();
-        let insertResult = await db.insertOne(MONGODB_DATABASE_NAME,COLLECTION_INTERFACE_NAME,params)
+        let insertResult = await db.insertOne(dbName,collectionName,params)
         return insertResult;
     },
     /**
@@ -33,12 +31,22 @@ const interfaceInfo = {
      * @param {any} params 
      * @returns 
      */
-    async postColInfo( params ){
+    async postColInfo( dbName,collectionName,params ){
+        // 判断传入的列的key与查数据库的key是否相同
+        // 如果相同,则不执行insertMany,返回select数据库的结果
+        // 如果不相同,insert不同的key
         // 如果存在表，则不插入
-        if(await db.collectionIfExist(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME))
-            return;
-        let insertResult = await db.insertMany(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,params);
-        return insertResult;
+        let colsResult = [];
+        let colsInfo = await db.select(dbName,collectionName,params);
+        let colsKeyInfo = util.getKeyofListobj("key",colsInfo);
+        let paramsKeyInfo = util.getKeyofListobj("key",params);
+        if(!util.isArrSame(colsKeyInfo,paramsKeyInfo)){
+            await db.insertMany(dbName,collectionName,params);
+            colsResult = await db.select(dbName,collectionName,{});
+        }else{
+            colsResult = colsInfo;
+        }
+        return colsResult;
     },
     /**
      * 删除一条接口记录
@@ -46,8 +54,8 @@ const interfaceInfo = {
      * @param {any} params 
      * @returns 
      */
-    async deleteInterfaceInfo(params){
-        const deleteResult = await db.delete(MONGODB_DATABASE_NAME,COLLECTION_INTERFACE_NAME,params);
+    async deleteInterfaceInfo(dbName,collectionName,params){
+        const deleteResult = await db.delete(dbName,collectionName,params);
         return deleteResult;
     },
     /**
@@ -57,12 +65,12 @@ const interfaceInfo = {
      * @param {any} filter 
      * @returns 
      */
-    async patchInterfaceInfo(updateData,filter){
+    async patchInterfaceInfo(dbName,collectionName,updateData,filter){
         let formatData = {
             $set:{}
         };
         formatData["$set"] = updateData;
-        const patchResult = await db.update(MONGODB_DATABASE_NAME,COLLECTION_INTERFACE_NAME,formatData,filter);
+        const patchResult = await db.update(dbName,collectionName,formatData,filter);
         return patchResult;
     }
 }

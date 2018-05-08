@@ -16,6 +16,7 @@ router
 .post('/api/url/add',InterfaceController.postInterfaceInfo)                         // 新增接口地址
 .del('/api/url/remove',InterfaceController.deleteInterfaceInfo)                     // 删除接口地址
 .patch('/api/url/patch',InterfaceController.getDataByInterface)                     // 拉取接口地址的数据
+.patch('/api/url/patchTree',InterfaceController.patchColsInfo)                     // 更改列信息
 .get('/api/currentUser',UserController.getUserInfo)                                 //获取用户信息
 
 

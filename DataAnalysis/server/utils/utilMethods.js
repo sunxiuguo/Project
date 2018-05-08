@@ -114,19 +114,20 @@ const util = {
         let colData = listData.map(function(interfaceItem){
             for(let key in interfaceItem.html){
                 interfaceItem.html[key] = util.renderTreeData(
-                        interfaceItem.html[key].map(function(htmlItem){
-                            let cols = htmlItem.filter((value,index) => index<2);
-                            let colObj = {
-                                head:key,
-                                first:cols[0],
-                                second:cols[1],
-                                text:""
-                            };
-                            tableCols.push(colObj);
-                            return cols;
-                        })
-                    );
-                }
+                    interfaceItem.html[key].map(function(htmlItem){
+                        let cols = htmlItem.filter((value,index) => index<2);
+                        let colObj = {
+                            head:key,
+                            first:cols[0],
+                            second:cols[1],
+                            text:"",
+                            checked:false,
+                        };
+                        tableCols.push(colObj);
+                        return cols;
+                    })
+                );
+            }
             return interfaceItem;
         });
         return {data:colData,cols:tableCols};
@@ -161,6 +162,37 @@ const util = {
         })
         return tree;
     },
+    /**
+     * 判断两个数组的元素是否相同
+     * 
+     * @param {any} arr1 
+     * @param {any} arr2 
+     * @returns true 代表两个数组元素相同;false 代表两个数组元素不同
+     */
+    isArrSame(arr1 , arr2){
+        if(arr1.length !== arr2.length)
+            return false;
+        for(let item of arr1){
+            if(!arr2.includes(item))
+                return false;
+        }    
+        return true;
+    },
+    /**
+     * 获取[{id:"123",name:"12313"},{id:"1234",name:"12313"}]这种格式的数组中的某一个key
+     * 比如获取id,返回["123","1234"]
+     * 
+     * @param {any} key 
+     * @param {any} list 
+     * @returns ["a","b",...]
+     */
+    getKeyofListobj(key,list){
+        let resultArr = [];
+        for(let obj of list){
+            resultArr.push(obj[key]);
+        }
+        return resultArr;
+    }
 
 
 

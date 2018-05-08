@@ -1,7 +1,11 @@
 import { Input, Icon, Tag, Tooltip } from 'antd';
 import React ,{ PureComponent } from 'react';
+import { connect } from 'dva';
 import styles from './index.less';
 
+@connect(({url}) => ({
+  url,
+}))
 export default class EditableTag extends PureComponent {
   state = {
     tags: [],
@@ -24,11 +28,17 @@ export default class EditableTag extends PureComponent {
 
   handleInputConfirm = () => {
     const { inputValue } = this.state;
+    const { key, html } = this.props;
     let { tags } = this.state;
     if (inputValue && tags.indexOf(inputValue) === -1) {
       // tags = [...tags, inputValue];
       tags = [inputValue];
     }
+    console.log(`
+      key = ${key}
+      html = ${html}
+      tag = ${inputValue}
+    `)
     this.setState({
       tags,
       inputVisible: false,

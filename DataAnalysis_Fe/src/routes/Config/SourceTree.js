@@ -64,7 +64,7 @@ export default class SourceTree extends PureComponent {
     const treeNameArr = Object.keys(data);
     return(
       treeNameArr.map(name =>(
-        <Col key={name} span={4} >
+        <Col key={name} span={8} >
           <Fragment>{name}</Fragment>
           <Tree
             checkable
@@ -78,16 +78,16 @@ export default class SourceTree extends PureComponent {
     )
   }
 
-  renderTitle = (text) =>{
-    const html = {__html:text};
+  renderTitle = (item) =>{
+    const html = {__html:item.title};
     return (
       <Fragment>
         {/* <span dangerouslySetInnerHTML={html} /> */}
         <EditableTag
           html={html}
+          key={item.key}
         />
       </Fragment>
-
     )
   }
 
@@ -95,19 +95,19 @@ export default class SourceTree extends PureComponent {
     return data.map((item) => {
       if (item.children) {
         return (
-          <TreeNode title={this.renderTitle(item.title)} key={item.key} dataRef={item}>
+          <TreeNode title={this.renderTitle(item)} key={item.key} dataRef={item}>
             {this.renderTreeNodes(item.children)}
           </TreeNode>
         );
       }
-      return <TreeNode title={this.renderTitle(item.title)} key={item.key} dataRef={item} />;
+      return <TreeNode title={this.renderTitle(item)} key={item.key} dataRef={item} />;
     });
   }
 
   render(){
     const { url: { data } } = this.props;
     const TabPaneList = this.mapTabPane(data.list);
-    const operations = <Button>保存</Button>;
+    const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
     return(
       <Tabs
         tabPosition="top"

@@ -8,7 +8,7 @@ export default {
       list: [],
       pagination: {},
     },
-    checkedKeys:[],
+    colsInfo:[],
   },
 
   effects: {
@@ -22,8 +22,8 @@ export default {
     *fetchTree({ payload }, { call, put }) {
       const response = yield call(queryTree, payload);
       yield put({
-        type: 'save',
-        payload: response.data,
+        type: 'saveCols',
+        payload: response,
       });
     },
     *add({ payload, callback }, { call, put }) {
@@ -67,11 +67,18 @@ export default {
         data: action.payload,
       };
     },
-    saveTree(state, action) {
+    saveCols(state, action) {
       return {
         ...state,
-        checkedKeys: action.payload,
+        data: action.payload.data,
+        colsInfo:action.payload.cols,
       };
+    },
+    patchCols(state, action) {
+      return {
+        ...state,
+        colsInfo: action.payload,
+      }
     },
 
 
