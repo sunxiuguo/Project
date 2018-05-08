@@ -25,6 +25,7 @@ const { TreeNode } = Tree;
 export default class SourceTree extends PureComponent {
   state={
     checkedKeys:[],
+    activeTab:"砸金蛋_ [总量]",
   }
 
   componentDidMount(){
@@ -35,7 +36,15 @@ export default class SourceTree extends PureComponent {
   }
 
   onCheck = (checkedKeys) =>{
+    // 每个表的checkedKeys需要单独存储,因为tree控件上有这样的属性checkedKeys={this.state.checkedKeys},所以会报错,某节点不存在与某tree
+    console.log(`${checkedKeys}`)
     this.setState({checkedKeys});
+  }
+
+  onTabChange = (key) =>{
+    this.setState({
+      activeTab:key,
+    })
   }
 
   mapTabPane = data =>{
@@ -51,6 +60,8 @@ export default class SourceTree extends PureComponent {
   }
 
   saveCheckedKeys = () =>{
+    console.log(`activeTab ${this.state.activeTab}`)
+    console.log(JSON.stringify(this.state.checkedKeys))
     // const { dispatch } = this.props;
     // // 修改数据:是否勾选
     // dispatch({
@@ -77,6 +88,19 @@ export default class SourceTree extends PureComponent {
     )
   }
 
+  renderTreeNodes = (data,head) => {
+    return data.map((item) => {
+      if (item.children) {
+        return (
+          <TreeNode title={this.renderTitle(item,head)} key={`${head}-${item.key}`} dataRef={item}>
+            {this.renderTreeNodes(item.children,head)}
+          </TreeNode>
+        );
+      }
+      return <TreeNode title={this.renderTitle(item,head)} key={`${head}-${item.key}`} dataRef={item} />;
+    });
+  }
+
   renderTitle = (item,head) =>{
     const html = {__html:item.title};
     return (
@@ -91,27 +115,15 @@ export default class SourceTree extends PureComponent {
     )
   }
 
-  renderTreeNodes = (data,head) => {
-    return data.map((item) => {
-      if (item.children) {
-        return (
-          <TreeNode title={this.renderTitle(item,head)} key={item.key} dataRef={item}>
-            {this.renderTreeNodes(item.children,head)}
-          </TreeNode>
-        );
-      }
-      return <TreeNode title={this.renderTitle(item,head)} key={item.key} dataRef={item} />;
-    });
-  }
-
   render(){
     const { url: { data } } = this.props;
     const TabPaneList = this.mapTabPane(data.list);
-    const operations = <Button onClick={()=>this.saveCheckedKeys}>保存</Button>;
+    const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
     return(
       <Tabs
         tabPosition="top"
         tabBarExtraContent={operations}
+        onChange={this.onTabChange}
       >
         {TabPaneList}
       </Tabs>

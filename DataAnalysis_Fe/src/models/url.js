@@ -50,13 +50,14 @@ export default {
       });
       if (callback) callback();
     },
-    *patchTree({ payload }, { call, put }) {
+    *patchTree({ payload,callback }, { call, put }) {
+      console.log(`In patchTree ${JSON.stringify(payload)}`)
       const response = yield call(patchTree, payload);
       yield put({
         type: 'patchTree',
         payload: response.cols,
       });
-      // if (callback) callback();
+      if (callback) callback();
     },
   },
 
