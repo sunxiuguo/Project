@@ -50,14 +50,18 @@ export default {
       });
       if (callback) callback();
     },
-    *patchTree({ payload,callback }, { call, put }) {
-      console.log(`In patchTree ${JSON.stringify(payload)}`)
-      const response = yield call(patchTree, payload);
-      yield put({
-        type: 'patchTree',
-        payload: response.cols,
-      });
-      if (callback) callback();
+    *patchTree({ payload }, { call, put }) {
+      // 会莫名其妙调用两次
+      // 于是添加判断,是否有type字段,作为权宜之计
+      if(payload.type){
+        const {type,...params} = payload;
+        const response = yield call(patchTree, params);
+        yield put({
+          type: 'patchTree',
+          payload: response.cols,
+        });
+      }
+
     },
   },
 

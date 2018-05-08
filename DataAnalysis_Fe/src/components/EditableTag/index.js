@@ -44,6 +44,7 @@ export default class EditableTag extends PureComponent {
       payload:{
         key:`${head}-${key}`,
         text:inputValue,
+        type:"patchTag",
       },
     })
     this.setState({
