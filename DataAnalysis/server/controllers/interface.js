@@ -14,8 +14,8 @@ const InterfaceController = {
     },
     async getInterfaceTreeInfo(ctx,next){
         const requestBody = ctx.request.query;
-        const dataWithCols = await InterfaceService.getInterfaceTreeInfo(requestBody);
-        return ctx.success({dataWithCols,flag:true});       
+        const data = await InterfaceService.getInterfaceTreeInfo(requestBody);
+        return ctx.success({data,flag:true});       
     },
     async postInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;

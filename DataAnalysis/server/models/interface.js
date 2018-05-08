@@ -37,7 +37,7 @@ const interfaceInfo = {
         // 如果不相同,insert不同的key
         // 如果存在表，则不插入
         let colsResult = [];
-        let colsInfo = await db.select(dbName,collectionName,params);
+        let colsInfo = await db.select(dbName,collectionName,{});
         let colsKeyInfo = util.getKeyofListobj("key",colsInfo);
         let paramsKeyInfo = util.getKeyofListobj("key",params);
         if(!util.isArrSame(colsKeyInfo,paramsKeyInfo)){
