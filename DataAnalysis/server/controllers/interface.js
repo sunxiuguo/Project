@@ -14,8 +14,8 @@ const InterfaceController = {
     },
     async getInterfaceTreeInfo(ctx,next){
         const requestBody = ctx.request.query;
-        const data = await InterfaceService.getInterfaceTreeInfo(requestBody);
-        return ctx.success({data,flag:true});       
+        const dataAll = await InterfaceService.getInterfaceTreeInfo(requestBody);
+        return ctx.success(dataAll);       
     },
     async postInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;
@@ -44,11 +44,12 @@ const InterfaceController = {
     async patchColsInfo(ctx,next){
         const requestBody = ctx.request.body;
         const result = await InterfaceService.patchColsInfo(requestBody);
-        const data = await InterfaceService.getColsInfo({});
+        const cols = await InterfaceService.getColsInfo({});
         if(!result)
-            return ctx.error({data});
-        return ctx.success({data});
+            return ctx.error({cols});
+        return ctx.success({cols});
     },
+    
     
 }
 

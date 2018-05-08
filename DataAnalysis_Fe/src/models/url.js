@@ -22,7 +22,7 @@ export default {
     *fetchTree({ payload }, { call, put }) {
       const response = yield call(queryTree, payload);
       yield put({
-        type: 'saveCols',
+        type: 'saveTree',
         payload: response,
       });
     },
@@ -50,13 +50,13 @@ export default {
       });
       if (callback) callback();
     },
-    *patchTree({ payload, callback }, { call, put }) {
+    *patchTree({ payload }, { call, put }) {
       const response = yield call(patchTree, payload);
       yield put({
-        type: 'saveTree',
-        payload: response.data,
+        type: 'patchTree',
+        payload: response.cols,
       });
-      if (callback) callback();
+      // if (callback) callback();
     },
   },
 
@@ -67,14 +67,14 @@ export default {
         data: action.payload,
       };
     },
-    saveCols(state, action) {
+    saveTree(state, action) {
       return {
         ...state,
         data: action.payload.data,
         colsInfo:action.payload.cols,
       };
     },
-    patchCols(state, action) {
+    patchTree(state, action) {
       return {
         ...state,
         colsInfo: action.payload,

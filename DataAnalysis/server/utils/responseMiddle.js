@@ -20,30 +20,22 @@ module.exports = async (ctx, next) => {
             pagination:{}
         }
     }
-    ctx.error = ({ data,result }) => {
-        responseBody.data.list = data;
-        responseBody.data.pagination.total = data.length;
-        responseBody.status = "error";
-       ctx.body = responseBody;
-    }
-    ctx.success = ({ data, flag }) => {
-        // flag代表data是否含有其他数据
-        if(flag){
-            responseBody.cols = data.colsInfo;
-            responseBody.data.list = data.data;
-            responseBody.data.pagination.total = data.data.length;
-            if(data.data){
-                responseBody.data.pagination.pageSize = 10; //每页显示的条数
-                responseBody.data.pagination.current = 1; //当前页码
-            }
-        }else{
+    ctx.error = ({ data,cols }) => {
+        if(data){
             responseBody.data.list = data;
             responseBody.data.pagination.total = data.length;
-            if(data){
-                responseBody.data.pagination.pageSize = 10; //每页显示的条数
-                responseBody.data.pagination.current = 1; //当前页码
-            }
-        }    
+        }
+        responseBody.status = "error";
+        ctx.body = responseBody;   
+    }
+    ctx.success = ({ data,cols }) => {
+        responseBody.cols = cols;
+        if(data){
+            responseBody.data.list = data;
+            responseBody.data.pagination.total = data.length;
+            responseBody.data.pagination.pageSize = 10; //每页显示的条数
+            responseBody.data.pagination.current = 1; //当前页码
+        }
         responseBody.status = "success";
         ctx.body = responseBody;
     }

@@ -34,7 +34,6 @@ export async function patch(params) {
     method: 'PATCH',
     body: {
       ...params,
-      // method: 'post',
     },
   });
 }
@@ -44,7 +43,6 @@ export async function patchTree(params) {
     method: 'PATCH',
     body: {
       ...params,
-      // method: 'post',
     },
   });
 }

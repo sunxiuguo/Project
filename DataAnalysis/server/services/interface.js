@@ -27,10 +27,10 @@ const interfaceInfo ={
         let interfaceList = await this.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
         // 获取树数据以及列名信息
         let interfaceTreeDataAndCol = await util.renderColumns(interfaceList);
-        const { data,cols } = interfaceTreeDataAndCol;
+        const { data,colsInfo } = interfaceTreeDataAndCol;
         // 保存列信息
-        let colsInfo = await InterfaceModel.postColInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,cols);
-        return {data,colsInfo};
+        let cols = await InterfaceModel.postColInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,colsInfo);
+        return {data,cols};
     },
     /**
      * 新增接口
@@ -80,13 +80,22 @@ const interfaceInfo ={
         let htmlData = await util.getDataByUrl(params.url);
         updateObj.html = htmlData;
         let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,updateObj,{key:params.key});
+        return result;
     },
     async patchColsInfo( params ){
-        console.log(`In patchColsInfo ${JSON.stringify(params)}`)
-        // let result = await InterfaceModel.patchInterfaceInfo()
+        const { key, ...updateData } = params;
+        const [ head, first, second ] = key.split('-');
+        console.log(`In patchColsInfo 
+                     key=${key}
+                     updateData=${JSON.stringify(updateData)}
+        `)
+        const filter = second ? {head,first,second} : {head,first};
+        let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,updateData,filter);
+        return result;
     },
     async getColsInfo( params ){
-
+        let result = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,params);
+        return result;
     },
 
 }

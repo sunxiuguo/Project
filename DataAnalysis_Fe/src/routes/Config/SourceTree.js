@@ -18,13 +18,11 @@ const { TreeNode } = Tree;
 
 
 
-@connect(({url,loading}) => ({
+@connect(({url}) => ({
   url,
-  loading:loading.models.url,
 }))
 @Form.create()
 export default class SourceTree extends PureComponent {
-
   state={
     checkedKeys:[],
   }
@@ -48,16 +46,17 @@ export default class SourceTree extends PureComponent {
             {this.renderTree(item.html)}
           </Row>
         </TabPane>)
-        )
+      )
     )
   }
 
   saveCheckedKeys = () =>{
-    const { dispatch } = this.props;
-    dispatch({
-      type:'url/patchTree',
-      payload:this.state.checkedKeys,
-    })
+    // const { dispatch } = this.props;
+    // // 修改数据:是否勾选
+    // dispatch({
+    //   type:'url/patchTree',
+    //   payload:this.state.checkedKeys,
+    // })
   }
 
   renderTree = data =>{
@@ -71,43 +70,44 @@ export default class SourceTree extends PureComponent {
             onCheck={this.onCheck}
             checkedKeys={this.state.checkedKeys}
           >
-            {this.renderTreeNodes(data[name])}
+            {this.renderTreeNodes(data[name],name)}
           </Tree>
         </Col>)
       )
     )
   }
 
-  renderTitle = (item) =>{
+  renderTitle = (item,head) =>{
     const html = {__html:item.title};
     return (
       <Fragment>
         {/* <span dangerouslySetInnerHTML={html} /> */}
         <EditableTag
           html={html}
-          key={item.key}
+          head={head}
+          item={item}
         />
       </Fragment>
     )
   }
 
-  renderTreeNodes = data => {
+  renderTreeNodes = (data,head) => {
     return data.map((item) => {
       if (item.children) {
         return (
-          <TreeNode title={this.renderTitle(item)} key={item.key} dataRef={item}>
-            {this.renderTreeNodes(item.children)}
+          <TreeNode title={this.renderTitle(item,head)} key={item.key} dataRef={item}>
+            {this.renderTreeNodes(item.children,head)}
           </TreeNode>
         );
       }
-      return <TreeNode title={this.renderTitle(item)} key={item.key} dataRef={item} />;
+      return <TreeNode title={this.renderTitle(item,head)} key={item.key} dataRef={item} />;
     });
   }
 
   render(){
     const { url: { data } } = this.props;
     const TabPaneList = this.mapTabPane(data.list);
-    const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
+    const operations = <Button onClick={()=>this.saveCheckedKeys}>保存</Button>;
     return(
       <Tabs
         tabPosition="top"

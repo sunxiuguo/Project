@@ -130,7 +130,7 @@ const util = {
             }
             return interfaceItem;
         });
-        return {data:colData,cols:tableCols};
+        return {data:colData,colsInfo:tableCols};
     },
     /**
      * 将列的二维数组转换为树结构
