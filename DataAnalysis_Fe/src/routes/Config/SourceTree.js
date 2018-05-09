@@ -19,8 +19,9 @@ const { TreeNode } = Tree;
 
 
 
-@connect(({url}) => ({
+@connect(({url,loading}) => ({
   url,
+  loading: loading.models.url,
 }))
 @Form.create()
 export default class SourceTree extends PureComponent {
@@ -36,7 +37,10 @@ export default class SourceTree extends PureComponent {
     })
   }
 
+  componentDidUpdate(){
+    // model里获取到的数据需要经过一次render才能更新在组件里,需要在didUpdate里取model里的数据
 
+  }
 
   onCheck = (checkedKeys,head) =>{
     // 记录不同tree勾选以及取消勾选的TreeNode
@@ -66,13 +70,12 @@ export default class SourceTree extends PureComponent {
       payload:{
         key:checkedKeys,
         checked:true,
-        type:"patchTag",
       },
     })
 
   }
 
-  mapTabPane = data =>{
+  mapTabPane = (data) =>{
     return (
       data.map(item => (
         <TabPane tab={item.description} key={item.description}>
@@ -84,22 +87,29 @@ export default class SourceTree extends PureComponent {
     )
   }
 
-  renderTree = data =>{
+  renderTree = (data) =>{
+    const { url:{colsInfo} } = this.props;
+    console.log(JSON.stringify(colsInfo))
     const treeNameArr = Object.keys(data);
     return(
-      treeNameArr.map(name =>(
-        <Col key={name} span={8} >
-          <Fragment>{name}</Fragment>
-          <Tree
-            checkable
-            checkStrictly
-            onCheck={(checkedKeys)=>{this.onCheck(checkedKeys,name)}}
-            // checkedKeys={this.state.checkedKeys}
-          >
-            {this.renderTreeNodes(data[name],name)}
-          </Tree>
-        </Col>)
-      )
+      treeNameArr.map(name =>{
+        const defaultCheckedKeys = colsInfo.filter(col => col.head === name && col.checked)
+                                           .map(col => `${col.head}-${col.first}-${col.second}`)
+        return (
+          <Col key={name} span={8} >
+            <Fragment>{name}</Fragment>
+            <Tree
+              checkable
+              checkStrictly
+              defaultCheckedKeys={defaultCheckedKeys}
+              onCheck={(checkedKeys)=>{this.onCheck(checkedKeys,name)}}
+              // checkedKeys={this.state.checkedKeys}
+            >
+              {this.renderTreeNodes(data[name],name)}
+            </Tree>
+          </Col>
+        )
+      })
     )
   }
 

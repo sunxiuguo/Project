@@ -42,6 +42,7 @@ const InterfaceController = {
         return ctx.success({data});
     },
     async patchColsInfo(ctx,next){
+        console.log(`Enter patchColsInfo`)
         const requestBody = ctx.request.body;
         const result = await InterfaceService.patchColsInfo(requestBody);
         const cols = await InterfaceService.getColsInfo({});

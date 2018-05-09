@@ -9,7 +9,6 @@ export default {
       pagination: {},
     },
     colsInfo:[],
-    checkedKeys:[],
   },
 
   effects: {
@@ -52,16 +51,12 @@ export default {
       if (callback) callback();
     },
     *patchTree({ payload }, { call, put }) {
-      // 会莫名其妙调用两次
-      // 于是添加判断,是否有type字段,作为权宜之计
-      if(payload.type){
-        const {type,...params} = payload;
-        const response = yield call(patchTree, params);
-        yield put({
-          type: 'patchTree',
-          payload: response.cols,
-        });
-      }
+      // 如果effects和reducers的方法名相同,会优先调用reducers的方法
+      const response = yield call(patchTree, payload);
+      yield put({
+        type: 'saveCols',
+        payload: response.cols,
+      });
 
     },
   },
@@ -80,7 +75,7 @@ export default {
         colsInfo:action.payload.cols,
       };
     },
-    patchTree(state, action) {
+    saveCols(state, action) {
       return {
         ...state,
         colsInfo: action.payload,

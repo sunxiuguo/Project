@@ -85,10 +85,15 @@ const interfaceInfo ={
     async patchColsInfo( params ){
         let resultAll = "success";
         const { key, ...updateData } = params;
+        let keys = [];
+        if(typeof key === "string")
+            keys = [key];
+        else
+            keys = key;
         // 更新checked字段,需要批量更新为true,并且把不符合条件的checked置为false
         if(updateData.hasOwnProperty('checked'))
             await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,{checked:false},{checked:true});
-        for(let keyNode of key){
+        for(let keyNode of keys){
             const [ head, first, second ] = keyNode.split('-');
             const filter = second ? {head,first,second} : {head,first};
             let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,updateData,filter);
