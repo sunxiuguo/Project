@@ -110,7 +110,7 @@ const action = {
                         console.log(`
                             数据库：${dbName}
                             集合：${collectionName}
-                            ${res.result.nModified}条文档被更新 更新条件为${JSON.stringify(filter)}
+                            ${res.result.nModified}条文档被更新 更新条件为${JSON.stringify(filter)} 更新为${JSON.stringify(updateData)}
                             ${remark ? remark : ""}
                         `);
                     resolve(res)

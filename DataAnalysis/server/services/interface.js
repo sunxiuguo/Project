@@ -83,15 +83,21 @@ const interfaceInfo ={
         return result;
     },
     async patchColsInfo( params ){
+        let resultAll = "success";
         const { key, ...updateData } = params;
-        const [ head, first, second ] = key.split('-');
-        console.log(`In patchColsInfo 
-                     key=${key}
-                     updateData=${JSON.stringify(updateData)}
-        `)
-        const filter = second ? {head,first,second} : {head,first};
-        let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,updateData,filter);
-        return result;
+        // 更新checked字段,需要批量更新为true,并且把不符合条件的checked置为false
+        if(updateData.hasOwnProperty('checked'))
+            await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,{checked:false},{checked:true});
+        for(let keyNode of key){
+            const [ head, first, second ] = keyNode.split('-');
+            const filter = second ? {head,first,second} : {head,first};
+            let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,updateData,filter);
+            if(!result){
+                resultAll = "error";
+                break;
+            }
+        }
+        return resultAll;
     },
     async getColsInfo( params ){
         let result = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,params);

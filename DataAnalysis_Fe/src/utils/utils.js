@@ -187,3 +187,41 @@ return (
   </Fragment>
   ) ;
 }
+
+/**
+ * 取两个数组的并集
+ * @export
+ * @param {any} arr1
+ * @param {any} arr2
+ */
+export function unionSet(arr1,arr2){
+  const arr1Set = new Set(arr1);
+  const arr2Set = new Set(arr2);
+  // Array.from将Set转为数组
+  return Array.from(new Set([...arr1Set,...arr2Set]));
+}
+
+/**
+ * 取两个数组的交集
+ *
+ * @export
+ * @param {any} arr1
+ * @param {any} arr2
+ */
+export function intersectionSet(arr1,arr2){
+  const arr1Set = new Set(arr1);
+  const arr2Set = new Set(arr2);
+  return Array.from(new Set([...arr1Set].filter(x => arr2Set.has(x))));
+}
+
+/**
+ * 取两个数组的补集
+ * @export
+ * @param {any} arr1
+ * @param {any} arr2
+ */
+export function differenceSet(arr1,arr2){
+  const union = unionSet(arr1,arr2);
+  const intersection = intersectionSet(arr1,arr2);
+  return Array.from(new Set([...union].filter(x => !intersection.has(x))));
+}

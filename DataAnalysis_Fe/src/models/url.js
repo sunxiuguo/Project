@@ -9,6 +9,7 @@ export default {
       pagination: {},
     },
     colsInfo:[],
+    checkedKeys:[],
   },
 
   effects: {
@@ -85,7 +86,6 @@ export default {
         colsInfo: action.payload,
       }
     },
-
 
   },
 };

@@ -12,6 +12,7 @@ import {
 } from 'antd';
 // import styles from './SourceTree.less';
 import EditableTag from '../../components/EditableTag';
+import { unionSet } from '../../utils/utils';
 
 const { TabPane } = Tabs;
 const { TreeNode } = Tree;
@@ -25,7 +26,7 @@ const { TreeNode } = Tree;
 export default class SourceTree extends PureComponent {
   state={
     checkedKeys:[],
-    activeTab:"砸金蛋_ [总量]",
+    checkedHead:"",
   }
 
   componentDidMount(){
@@ -35,16 +36,40 @@ export default class SourceTree extends PureComponent {
     })
   }
 
-  onCheck = (checkedKeys) =>{
-    // 每个表的checkedKeys需要单独存储,因为tree控件上有这样的属性checkedKeys={this.state.checkedKeys},所以会报错,某节点不存在与某tree
-    console.log(`${checkedKeys}`)
-    this.setState({checkedKeys});
+
+
+  onCheck = (checkedKeys,head) =>{
+    // 记录不同tree勾选以及取消勾选的TreeNode
+    const stateCheckedKeys = this.state.checkedKeys;
+    const currentCheckedKeys = checkedKeys.checked;
+    let checkedAllKeys = [];
+    if(head === this.state.checkedHead){
+      checkedAllKeys = checkedKeys.checked;
+    }else{
+      const unionArr = unionSet(currentCheckedKeys,stateCheckedKeys);
+      checkedAllKeys = unionArr.filter(item => {
+        return item.indexOf(head) === -1 || new Set(currentCheckedKeys).has(item)
+      })
+    }
+    this.setState({
+      checkedKeys:checkedAllKeys,
+      checkedHead:head,
+    });
   }
 
-  onTabChange = (key) =>{
-    this.setState({
-      activeTab:key,
+  saveCheckedKeys = () =>{
+    // 集合内的key,checked更改为true;其他的全部更改为false
+    const { dispatch } = this.props;
+    const { checkedKeys } = this.state;
+    dispatch({
+      type:'url/patchTree',
+      payload:{
+        key:checkedKeys,
+        checked:true,
+        type:"patchTag",
+      },
     })
+
   }
 
   mapTabPane = data =>{
@@ -59,17 +84,6 @@ export default class SourceTree extends PureComponent {
     )
   }
 
-  saveCheckedKeys = () =>{
-    console.log(`activeTab ${this.state.activeTab}`)
-    console.log(JSON.stringify(this.state.checkedKeys))
-    // const { dispatch } = this.props;
-    // // 修改数据:是否勾选
-    // dispatch({
-    //   type:'url/patchTree',
-    //   payload:this.state.checkedKeys,
-    // })
-  }
-
   renderTree = data =>{
     const treeNameArr = Object.keys(data);
     return(
@@ -78,8 +92,9 @@ export default class SourceTree extends PureComponent {
           <Fragment>{name}</Fragment>
           <Tree
             checkable
-            onCheck={this.onCheck}
-            checkedKeys={this.state.checkedKeys}
+            checkStrictly
+            onCheck={(checkedKeys)=>{this.onCheck(checkedKeys,name)}}
+            // checkedKeys={this.state.checkedKeys}
           >
             {this.renderTreeNodes(data[name],name)}
           </Tree>
@@ -123,7 +138,6 @@ export default class SourceTree extends PureComponent {
       <Tabs
         tabPosition="top"
         tabBarExtraContent={operations}
-        onChange={this.onTabChange}
       >
         {TabPaneList}
       </Tabs>
