@@ -11,7 +11,6 @@ export default {
     colsInfo:[],
     treeInfo:{
       list: [],
-      pagination: {},
     },
   },
 
@@ -75,8 +74,9 @@ export default {
     saveTree(state, action) {
       return {
         ...state,
-        treeInfo: action.payload.data,
+        treeInfo: action.payload.treeInfo,
         colsInfo:action.payload.cols,
+        data:action.payload.data,
       };
     },
     saveCols(state, action) {

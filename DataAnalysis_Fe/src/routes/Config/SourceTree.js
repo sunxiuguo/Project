@@ -27,7 +27,7 @@ const { TreeNode } = Tree;
 @Form.create()
 export default class SourceTree extends PureComponent {
   state={
-    checkedKeys:[],
+    checkedKeys:["砸金蛋_ [总量]-&#x65E5;&#x671F;-&#x65E5;&#x671F;"], // 默认勾选此日期节点
     checkedHead:"",
   }
 
@@ -93,8 +93,12 @@ export default class SourceTree extends PureComponent {
     const treeNameArr = Object.keys(data);
     return(
       treeNameArr.map(name =>{
-        const defaultCheckedKeys = colsInfo.filter(col => col.head === name && col.checked)
-        .map(col => `${col.head}-${col.first}-${col.second}`);
+        // 筛选出勾选的节点,默认勾选第一个日期节点
+        const defaultCheckedKeys = colsInfo.filter(col =>
+          (col.head === name && col.checked)
+          ||
+          (col.head === "砸金蛋_ [总量]"  && col.first === "&#x65E5;&#x671F;" && col.second === "&#x65E5;&#x671F;")
+        ).map(col => `${col.head}-${col.first}-${col.second}`);
 
         return (
           <Col key={name} span={8} >
@@ -123,7 +127,8 @@ export default class SourceTree extends PureComponent {
           </TreeNode>
         );
       }
-      return <TreeNode title={this.renderTitle(item,head)} key={`${head}-${item.key}`} dataRef={item} />;
+      // 禁用第一个日期节点
+      return <TreeNode title={this.renderTitle(item,head)} key={`${head}-${item.key}`} dataRef={item} disableCheckbox={`${head}-${item.key}` === `砸金蛋_ [总量]-&#x65E5;&#x671F;-&#x65E5;&#x671F;`} />;
     });
   }
 
@@ -149,9 +154,9 @@ export default class SourceTree extends PureComponent {
       return {
         title:colObj.text ? colObj.text : `${colObj.head}-${colObj.first}-${colObj.second}`,
         dataIndex:`${colObj.head}-${colObj.first}-${colObj.second}`,
+        key:`${colObj.head}-${colObj.first}-${colObj.second}`,
       }
     });
-    console.log(JSON.stringify(data))
     const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
     return(
       <Tabs

@@ -18,6 +18,9 @@ module.exports = async (ctx, next) => {
         data:{
             list:[],
             pagination:{}
+        },
+        treeInfo:{
+            list:[]
         }
     }
     ctx.error = ({ data,cols }) => {
@@ -28,13 +31,16 @@ module.exports = async (ctx, next) => {
         responseBody.status = "error";
         ctx.body = responseBody;   
     }
-    ctx.success = ({ data,cols }) => {
+    ctx.success = ({ data,cols,treeInfo }) => {
         responseBody.cols = cols;
         if(data){
             responseBody.data.list = data;
             responseBody.data.pagination.total = data.length;
             responseBody.data.pagination.pageSize = 10; //每页显示的条数
             responseBody.data.pagination.current = 1; //当前页码
+        }
+        if(treeInfo){
+            responseBody.treeInfo.list = treeInfo;
         }
         responseBody.status = "success";
         ctx.body = responseBody;

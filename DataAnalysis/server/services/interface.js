@@ -24,13 +24,13 @@ const interfaceInfo ={
      * @param {*} params 
      */
     async getInterfaceTreeInfo( params ){
-        let interfaceList = await this.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
-        // 获取树数据以及列名信息
-        let interfaceTreeDataAndCol = await util.renderColumns(interfaceList);
-        const { data,colsInfo } = interfaceTreeDataAndCol;
-        // 保存列信息
-        let cols = await InterfaceModel.postColInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,colsInfo);
-        return {data,cols};
+        const interfaceList = await this.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
+        // 获取树结构表头信息
+        const interfaceTreeDataAndCol = await util.renderColumns(interfaceList);
+        const { treeInfo,colsInfo } = interfaceTreeDataAndCol;
+        // 保存列表结构表头信息 并返回新的列信息
+        const cols = await InterfaceModel.postColInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,colsInfo);
+        return {data:interfaceList,cols,treeInfo};
     },
     /**
      * 新增接口
