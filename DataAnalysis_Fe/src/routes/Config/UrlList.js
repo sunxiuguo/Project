@@ -10,8 +10,6 @@ import {
   Select,
   Icon,
   Button,
-  Dropdown,
-  Menu,
   InputNumber,
   DatePicker,
   Modal,
@@ -22,7 +20,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 // import { getDateString } from '../../utils/utils';
 import styles from './UrlList.less';
 
-
+const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const { Option } = Select;
 const getValue = obj =>
@@ -127,29 +125,22 @@ export default class TableList extends PureComponent {
     });
   };
 
-  handleMenuClick = e => {
+  handleDeleteClick = () => {
     const { dispatch } = this.props;
     const { selectedRows } = this.state;
-
     if (!selectedRows) return;
 
-    switch (e.key) {
-      case 'remove':
-        dispatch({
-          type: 'url/remove',
-          payload: {
-            key: selectedRows.map(row => row.key).join(','),
-          },
-          callback: () => {
-            this.setState({
-              selectedRows: [],
-            });
-          },
+    dispatch({
+      type: 'url/remove',
+      payload: {
+        key: selectedRows.map(row => row.key).join(','),
+      },
+      callback: () => {
+        this.setState({
+          selectedRows: [],
         });
-        break;
-      default:
-        break;
-    }
+      },
+    });
 
   };
 
@@ -211,17 +202,30 @@ export default class TableList extends PureComponent {
   };
 
   handleGetData = record =>{
-    this.props.dispatch({
+    const { form,dispatch } = this.props;
+    const date = form.getFieldValue('date');
+    let formatDate = "";
+    console.log(moment().subtract(6, 'days').format('YYYY-MM-DD'))
+    if(date){
+      const formatDateStart = moment(date[0]).format('YYYYMMDD');
+      const formatDateEnd = moment(date[1]).format('YYYYMMDD');
+      formatDate = `${formatDateStart},${formatDateEnd}`;
+    }
+    dispatch({
       type:'url/patch',
       payload: {
         key:record.key,
         url:record.url,
+        date:formatDate,
       },
     })
-    // notification.success({
-    //   message:`真棒！`,
-    //   description:`成功拉取数据！`,
-    // });
+
+  }
+
+  handleGetAllData = () =>{
+    const { url: { data } } = this.props;
+    for(const record of data.list)
+      this.handleGetData(record);
   }
 
   renderSimpleForm() {
@@ -335,7 +339,23 @@ export default class TableList extends PureComponent {
   }
 
   renderForm() {
-    return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
+    // return this.state.expandForm ? this.renderAdvancedForm() : this.renderSimpleForm();
+    const { getFieldDecorator } = this.props.form;
+    return (
+      <Form onSubmit={this.handleSearch} layout="inline">
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }}>
+          <Col md={8} sm={24}>
+            <FormItem label="日期">
+              {getFieldDecorator('date')(
+                <RangePicker
+                  style={{ width: '100%' }}
+                />
+              )}
+            </FormItem>
+          </Col>
+        </Row>
+      </Form>
+    )
   }
 
   render() {
@@ -365,20 +385,6 @@ export default class TableList extends PureComponent {
       {
         title: '状态',
         dataIndex: 'status',
-        // filters: [
-        //   {
-        //     text: status[0],
-        //     value: 0,
-        //   },
-        //   {
-        //     text: status[1],
-        //     value: 1,
-        //   },
-        // ],
-        // onFilter: (value, record) => record.status.toString() === value,
-        // render(val) {
-        //   return <Badge status={statusMap[val]} text={status[val]} />;
-        // },
         render() {
           return <Badge status="processing" text="正常" />;
         },
@@ -397,12 +403,6 @@ export default class TableList extends PureComponent {
       },
     ];
 
-    const menu = (
-      <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
-        <Menu.Item key="remove">删除</Menu.Item>
-      </Menu>
-    );
-
     const parentMethods = {
       handleAdd: this.handleAdd,
       handleModalVisible: this.handleModalVisible,
@@ -417,14 +417,12 @@ export default class TableList extends PureComponent {
               <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                 新建
               </Button>
+              <Button icon="api" onClick={this.handleGetAllData}>
+                一键获取所有数据
+              </Button>
               {selectedRows.length > 0 && (
                 <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
+                  <Button onClick={this.handleDeleteClick} key="remove">删除</Button>
                 </span>
               )}
             </div>

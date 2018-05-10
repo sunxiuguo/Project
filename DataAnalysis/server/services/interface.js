@@ -77,7 +77,7 @@ const interfaceInfo ={
         // 更新 updatedAt html字段
         let dateTimeNow = DateTime.getNowDatetime();
         let updateObj = {updatedAt:dateTimeNow,html:""};
-        let htmlData = await util.getDataByUrl(params.url);
+        let htmlData = await util.getDataByUrl(params.url,params.date);
         updateObj.html = htmlData;
         let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,updateObj,{key:params.key});
         return result;

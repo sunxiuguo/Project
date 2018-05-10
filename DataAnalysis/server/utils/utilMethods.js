@@ -62,10 +62,13 @@ const util = {
      * @param {*} url 
      * @returns {html} 返回Html格式text
      */
-    async getDataByUrl( url ){
+    async getDataByUrl( url,date ){
+        let urlExpand = url;
+        if(date)
+            urlExpand = `${url}&sday=${date.split(',')[0]}&eday=${date.split(',')[1]}&app=0&sys=000000&filter_id=0`;
         let cookie = await this.getCookie();
         return new Promise((resolve,reject) =>{
-            superagent.get(url)
+            superagent.get(urlExpand)
             .set('Cookie', cookie)
             //.query({order:'desc'}) 查询字符串
             .end(function(err, res) {
@@ -81,6 +84,8 @@ const util = {
      * @return json数据
      */
     async mapHtmlTableToJSON( html ){
+        if(!html)
+            return [];
         const $ = cheerio.load(html);
         let resultJson = {};
         $('.dtable_title').each(function(indexTitle){

@@ -12,6 +12,7 @@ import {
 } from 'antd';
 // import styles from './SourceTree.less';
 import EditableTag from '../../components/EditableTag';
+import DragTable from '../../components/DragTable';
 import { unionSet } from '../../utils/utils';
 
 const { TabPane } = Tabs;
@@ -89,12 +90,12 @@ export default class SourceTree extends PureComponent {
 
   renderTree = (data) =>{
     const { url:{colsInfo} } = this.props;
-    console.log(JSON.stringify(colsInfo))
     const treeNameArr = Object.keys(data);
     return(
       treeNameArr.map(name =>{
         const defaultCheckedKeys = colsInfo.filter(col => col.head === name && col.checked)
-                                           .map(col => `${col.head}-${col.first}-${col.second}`)
+        .map(col => `${col.head}-${col.first}-${col.second}`);
+
         return (
           <Col key={name} span={8} >
             <Fragment>{name}</Fragment>
@@ -141,14 +142,29 @@ export default class SourceTree extends PureComponent {
   }
 
   render(){
-    const { url: { data } } = this.props;
-    const TabPaneList = this.mapTabPane(data.list);
+    const { url: { treeInfo ,data ,colsInfo },loading } = this.props;
+    const TabPaneList = this.mapTabPane(treeInfo.list);
+    const checkedCols = colsInfo.filter(col => col.checked);
+    const columns = checkedCols.map(colObj =>{
+      return {
+        title:colObj.text ? colObj.text : `${colObj.head}-${colObj.first}-${colObj.second}`,
+        dataIndex:`${colObj.head}-${colObj.first}-${colObj.second}`,
+      }
+    });
+    console.log(JSON.stringify(data))
     const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
     return(
       <Tabs
         tabPosition="top"
         tabBarExtraContent={operations}
       >
+        <TabPane tab="周报表格" key="tablePane">
+          <DragTable
+            loading={loading}
+            data={data}
+            columns={columns}
+          />
+        </TabPane>
         {TabPaneList}
       </Tabs>
     );

@@ -9,6 +9,10 @@ export default {
       pagination: {},
     },
     colsInfo:[],
+    treeInfo:{
+      list: [],
+      pagination: {},
+    },
   },
 
   effects: {
@@ -71,7 +75,7 @@ export default {
     saveTree(state, action) {
       return {
         ...state,
-        data: action.payload.data,
+        treeInfo: action.payload.data,
         colsInfo:action.payload.cols,
       };
     },
