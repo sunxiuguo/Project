@@ -115,8 +115,9 @@ const util = {
      * @param {*} listData 
      */
     async renderColumns( listData ){
+        let listDataTemp = JSON.parse(JSON.stringify(listData));
         let tableCols = [];
-        let colData = listData.map(function(interfaceItem){
+        let colData = listDataTemp.map(function(interfaceItem){
             for(let key in interfaceItem.html){
                 interfaceItem.html[key] = util.renderTreeData(
                     interfaceItem.html[key].map(function(htmlItem){

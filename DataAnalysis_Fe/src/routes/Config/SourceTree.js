@@ -12,7 +12,7 @@ import {
 } from 'antd';
 // import styles from './SourceTree.less';
 import EditableTag from '../../components/EditableTag';
-import DragTable from '../../components/DragTable';
+import DragList from '../../components/DragList';
 import { unionSet } from '../../utils/utils';
 
 const { TabPane } = Tabs;
@@ -27,7 +27,8 @@ const { TreeNode } = Tree;
 @Form.create()
 export default class SourceTree extends PureComponent {
   state={
-    checkedKeys:["砸金蛋_ [总量]-&#x65E5;&#x671F;-&#x65E5;&#x671F;"], // 默认勾选此日期节点
+    // checkedKeys:["砸金蛋_ [总量]-&#x65E5;&#x671F;-&#x65E5;&#x671F;"], // 默认勾选此日期节点
+    checkedKeys:[],
     checkedHead:"",
   }
 
@@ -45,7 +46,8 @@ export default class SourceTree extends PureComponent {
 
   onCheck = (checkedKeys,head) =>{
     // 记录不同tree勾选以及取消勾选的TreeNode
-    const stateCheckedKeys = this.state.checkedKeys;
+    const { url:{colsInfo} } = this.props;
+    const stateCheckedKeys = colsInfo.filter(col => col.checked).map(col => `${col.head}-${col.first}-${col.second}`);;
     const currentCheckedKeys = checkedKeys.checked;
     let checkedAllKeys = [];
     if(head === this.state.checkedHead){
@@ -53,7 +55,8 @@ export default class SourceTree extends PureComponent {
     }else{
       const unionArr = unionSet(currentCheckedKeys,stateCheckedKeys);
       checkedAllKeys = unionArr.filter(item => {
-        return item.indexOf(head) === -1 || new Set(currentCheckedKeys).has(item)
+        const itemHead = item.split('-')[0];
+        return itemHead!==head || new Set(currentCheckedKeys).has(item)
       })
     }
     this.setState({
@@ -95,9 +98,7 @@ export default class SourceTree extends PureComponent {
       treeNameArr.map(name =>{
         // 筛选出勾选的节点,默认勾选第一个日期节点
         const defaultCheckedKeys = colsInfo.filter(col =>
-          (col.head === name && col.checked)
-          ||
-          (col.head === "砸金蛋_ [总量]"  && col.first === "&#x65E5;&#x671F;" && col.second === "&#x65E5;&#x671F;")
+          col.head === name && col.checked
         ).map(col => `${col.head}-${col.first}-${col.second}`);
 
         return (
@@ -128,7 +129,14 @@ export default class SourceTree extends PureComponent {
         );
       }
       // 禁用第一个日期节点
-      return <TreeNode title={this.renderTitle(item,head)} key={`${head}-${item.key}`} dataRef={item} disableCheckbox={`${head}-${item.key}` === `砸金蛋_ [总量]-&#x65E5;&#x671F;-&#x65E5;&#x671F;`} />;
+      return (
+        <TreeNode
+          title={this.renderTitle(item,head)}
+          key={`${head}-${item.key}`}
+          dataRef={item}
+          // disableCheckbox={`${head}-${item.key}` === `砸金蛋_ [总量]-&#x65E5;&#x671F;-&#x65E5;&#x671F;`}
+        />
+      )
     });
   }
 
@@ -147,16 +155,39 @@ export default class SourceTree extends PureComponent {
   }
 
   render(){
-    const { url: { treeInfo ,data ,colsInfo },loading } = this.props;
+    const { url: { treeInfo ,data:{ list } ,colsInfo },loading } = this.props;
     const TabPaneList = this.mapTabPane(treeInfo.list);
-    const checkedCols = colsInfo.filter(col => col.checked);
-    const columns = checkedCols.map(colObj =>{
-      return {
-        title:colObj.text ? colObj.text : `${colObj.head}-${colObj.first}-${colObj.second}`,
-        dataIndex:`${colObj.head}-${colObj.first}-${colObj.second}`,
-        key:`${colObj.head}-${colObj.first}-${colObj.second}`,
+    const checkedCols = colsInfo.filter(col => col.checked); // 勾选的列的所有信息
+    const mapKeyTag = {};
+    for(const item of checkedCols){
+      const key = `${item.head}-${item.first}-${item.second}`;
+      mapKeyTag[key]=item.text ? item.text:key ;
+    }
+    const checkedKeys = Object.keys(mapKeyTag); // 勾选列的key
+    const dataWithHead = {}; // 带有head first second的所有数据
+    for(const item of list){
+      Object.assign(dataWithHead,item.html);
+    }
+    const DragListData = [];
+    for(const head in dataWithHead){
+      if(Object.prototype.hasOwnProperty.call(dataWithHead,head)){
+        const listData = dataWithHead[head];
+        const checkedData = listData.filter(data => {
+          const key = `${head}-${data[0]}-${data[1]}`;
+          return checkedKeys.indexOf(key) > -1;
+        }).map(item =>{
+          const [first,second,...data] = item;
+          const key = `${head}-${first}-${second}`;
+          const tag = mapKeyTag[key];
+          return [tag,...data];
+        })
+        // console.log(JSON.stringify(checkedData));
+        if(checkedData.length >0)
+          DragListData.push(...checkedData);
       }
-    });
+    }
+    // console.log(JSON.stringify(DragListData));
+
     const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
     return(
       <Tabs
@@ -164,10 +195,9 @@ export default class SourceTree extends PureComponent {
         tabBarExtraContent={operations}
       >
         <TabPane tab="周报表格" key="tablePane">
-          <DragTable
+          <DragList
             loading={loading}
-            data={data}
-            columns={columns}
+            data={DragListData}
           />
         </TabPane>
         {TabPaneList}

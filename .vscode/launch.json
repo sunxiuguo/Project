@@ -5,10 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "type": "chrome",
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 8000,
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
             "request": "launch",
-            "name": "启动程序",
-            "program": "${workspaceFolder}/DataAnalysis/server/utils/utilMethods.js"
+            "name": "Launch Chrome",
+            "url": "http://localhost:8000",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
