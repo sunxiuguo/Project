@@ -1,4 +1,4 @@
-import { query, add, remove, patch, queryTree, patchTree } from '../services/url';
+import { query, add, remove, patch, queryTree, patchTree,patchOrder } from '../services/url';
 
 export default {
   namespace: 'url',
@@ -8,10 +8,11 @@ export default {
       list: [],
       pagination: {},
     },
-    colsInfo:[],
     treeInfo:{
       list: [],
     },
+    colsInfo:[],
+    colsOrder:[],
   },
 
   effects: {
@@ -60,7 +61,13 @@ export default {
         type: 'saveCols',
         payload: response.cols,
       });
-
+    },
+    *getCheckedColsOrder({ payload }, { call, put }) {
+      const response = yield call(patchOrder, payload);
+      yield put({
+        type: 'saveCols',
+        payload: response.cols,
+      });
     },
   },
 
@@ -83,6 +90,12 @@ export default {
       return {
         ...state,
         colsInfo: action.payload,
+      }
+    },
+    saveOrder(state, action) {
+      return {
+        ...state,
+        colsOrder: action.payload,
       }
     },
 

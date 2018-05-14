@@ -20,20 +20,24 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   margin: `0 ${grid}px 0 0`,
 
   // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
+  background: isDragging ? '#a7d6fa' : '#f0f2f5',
 
   // styles we need to apply on draggables
   ...draggableStyle,
 });
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? '#f0f2f5' : '#f0f2f5',
   display: 'flex',
-  padding: grid,
+  // padding: grid,
+  padding:0,
   overflow: 'auto',
 });
-// eslint-disable-next-line
-const renderList = (data,key) =>{ return data.map((item,index) => <li key={`${key}-${item}-${index}`}>{item}</li>)};
+
+const renderList = (data,key) =>{
+  // eslint-disable-next-line
+  return data.map((item,index) => <li key={`${key}-${item}-${index}`} style={{marginBottom:5}}>{item}</li>)
+};
 
 @connect(({url}) => ({
   url,
@@ -47,6 +51,13 @@ export default class DragList extends PureComponent {
     }
   }
 
+  componentDidMount(){
+    // const { dispatch } = this.props;
+    // dispatch({
+    //   type:'url/getCheckedColsOrder',
+    // })
+  }
+
   componentWillReceiveProps(nextProps){
     if(JSON.stringify(nextProps.data) === JSON.stringify(this.props.data))
       return;
@@ -54,6 +65,8 @@ export default class DragList extends PureComponent {
       items:nextProps.data,
     })
   }
+
+
 
   onDragEnd = result => {
     // dropped outside the list
@@ -66,7 +79,7 @@ export default class DragList extends PureComponent {
       result.source.index,
       result.destination.index
     );
-
+    console.log(JSON.stringify(items))
     this.setState({
       items,
     });

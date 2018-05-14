@@ -46,3 +46,12 @@ export async function patchTree(params) {
     },
   });
 }
+
+export async function patchOrder(params){
+  return request(`/api/url/patchOrder`, {
+    method: 'PATCH',
+    body: {
+      ...params,
+    },
+  });
+}
