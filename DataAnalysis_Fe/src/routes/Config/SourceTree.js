@@ -179,7 +179,8 @@ export default class SourceTree extends PureComponent {
           const [first,second,...data] = item;
           const key = `${head}-${first}-${second}`;
           const tag = mapKeyTag[key];
-          return [tag,...data];
+          // return [tag,...data];
+          return {id:key,content:[tag,...data]}
         })
         // console.log(JSON.stringify(checkedData));
         if(checkedData.length >0)
