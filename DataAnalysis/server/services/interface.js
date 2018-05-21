@@ -32,8 +32,8 @@ const interfaceInfo ={
         // if(db.collectionIfExist(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME))
         //     await InterfaceModel.deleteInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,{});
         const cols = await InterfaceModel.postColInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,colsInfo);
-        const colsOrder = await this.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER,{});
-        return {data:interfaceList,cols,treeInfo};
+        const colsOrder = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER,{});
+        return {data:interfaceList,cols,treeInfo,colsOrder};
     },
     /**
      * 新增接口
@@ -86,6 +86,7 @@ const interfaceInfo ={
         return result;
     },
     async patchColsInfo( params ){
+        // 需要保存colsOrder到order表里
         let resultAll = "success";
         const { key, ...updateData } = params;
         let keys = [];
@@ -96,6 +97,7 @@ const interfaceInfo ={
         // 更新checked字段,需要批量更新为true,并且把不符合条件的checked置为false
         if(updateData.hasOwnProperty('checked'))
             await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,{checked:false},{checked:true});
+        await interfaceInfo.patchColsOrder(keys);
         for(let keyNode of keys){
             const [ head, first, second ] = keyNode.split('-');
             const filter = second ? {head,first,second} : {head,first};
@@ -116,12 +118,12 @@ const interfaceInfo ={
         return result;
     },
     async patchColsOrder( params ){
-        // console.log(`in patchColsOrder ${JSON.stringify(params)}`)
-        if(JSON.stringify(params) === "{}")
+        console.log(`in patchColsOrder ${JSON.stringify(params)}`)
+        if(JSON.stringify(params) === "{}" || JSON.stringify(params) === "[]")
             return;
         if(db.collectionIfExist(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER))
             await InterfaceModel.deleteInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_ORDER,{});
-        let result = await InterfaceModel.postInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER,params);
+        let result = await InterfaceModel.postInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER,{...params});
         return result;
     }
 

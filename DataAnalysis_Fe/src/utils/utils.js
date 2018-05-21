@@ -225,3 +225,21 @@ export function differenceSet(arr1,arr2){
   const intersection = intersectionSet(arr1,arr2);
   return Array.from(new Set([...union].filter(x => !intersection.has(x))));
 }
+
+export function arrayTranspose(arr1){
+  if(arr1.length === 0)
+    return;
+  let arr2 = [];
+  //确定新数组有多少行
+  for(var i=0;i<arr1[0].length;i++){
+    arr2[i] = [];
+  }
+  //动态添加数据
+  //遍历原数组
+  for(var i=0;i<arr1.length;i++){
+    for(var j=0;j<arr1[i].length;j++){
+    arr2[j][i] = arr1[i][j];
+    }
+  }
+  return arr2;
+}

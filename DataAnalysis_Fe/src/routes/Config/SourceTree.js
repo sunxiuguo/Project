@@ -13,7 +13,7 @@ import {
 // import styles from './SourceTree.less';
 import EditableTag from '../../components/EditableTag';
 import DragList from '../../components/DragList';
-import { unionSet } from '../../utils/utils';
+import { unionSet,arrayTranspose } from '../../utils/utils';
 
 const { TabPane } = Tabs;
 const { TreeNode } = Tree;
@@ -156,8 +156,8 @@ export default class SourceTree extends PureComponent {
 
   render(){
     const { url: { treeInfo ,data:{ list } ,colsInfo,colsOrder },loading } = this.props;
+    // console.log(JSON.stringify(list))
     const TabPaneList = this.mapTabPane(treeInfo.list);
-    console.log(`IN sourceTree colsOrder=${JSON.stringify(colsOrder)}`)
     const checkedCols = colsInfo.filter(col => col.checked); // 勾选的列的所有信息
     const mapKeyTag = {};
     for(const item of checkedCols){
@@ -169,7 +169,7 @@ export default class SourceTree extends PureComponent {
     for(const item of list){
       Object.assign(dataWithHead,item.html);
     }
-    const DragListData = [];
+    let DragListData = [];
     for(const head in dataWithHead){
       if(Object.prototype.hasOwnProperty.call(dataWithHead,head)){
         const listData = dataWithHead[head];
@@ -188,22 +188,63 @@ export default class SourceTree extends PureComponent {
           DragListData.push(...checkedData);
       }
     }
-    // console.log(JSON.stringify(DragListData));
+    const orderResult = [];
+    const colsOrderItem = colsOrder[0];
+    // DragListData 根据colsOrderItem 排序
+    for(let key in colsOrderItem){
+      let found = false;
+      DragListData = DragListData.filter(function(item) {
+          if(!found && item.id == colsOrderItem[key]) {
+              orderResult.push(item);
+              found = true;
+              return false;
+          } else
+              return true;
+      })
+    }
+    const csvRowsOrigin = [];
+    for(let item of orderResult){
+      csvRowsOrigin.push(item.content);
+    }
+    // 数组转置
+    const csvRows = arrayTranspose(csvRowsOrigin);
+    let csvString = "";
+    if(csvRows)
+      csvString = '\uFEFF' + csvRows.join('\n');
+    const downLoadButton = (
+      <Button
+          icon="download"
+          size="large"
+          type="primary"
+          style={{marginLeft:"25%"}}
+      >
+          <a
+              href={'data:attachment/csv,' + encodeURI(csvString)}
+              target={"_blank"}
+              download={"周报.csv"}
+              style={{color:"white"}}
+          >
+              导出周报数据
+          </a>
+      </Button>);
 
     const operations = <Button onClick={this.saveCheckedKeys}>保存</Button>;
     return(
-      <Tabs
-        tabPosition="top"
-        tabBarExtraContent={operations}
-      >
-        <TabPane tab="周报表格" key="tablePane">
-          <DragList
-            loading={loading}
-            data={DragListData}
-          />
-        </TabPane>
-        {TabPaneList}
-      </Tabs>
+      <div>
+        <Tabs
+          tabPosition="top"
+          tabBarExtraContent={operations}
+        >
+          <TabPane tab="周报表格" key="tablePane">
+            <DragList
+              loading={loading}
+              data={orderResult}
+            />
+          </TabPane>
+          {TabPaneList}
+        </Tabs>
+        {csvString ? downLoadButton :null}
+      </div>
     );
   }
 }
