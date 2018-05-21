@@ -169,27 +169,51 @@ export default class SourceTree extends PureComponent {
     for(const item of list){
       Object.assign(dataWithHead,item.html);
     }
+    // console.log(`dataWithHead = ${JSON.stringify(dataWithHead)}`)
     let DragListData = [];
+    let eggMoneyArr = ["砸蛋收入",0,0,0,0,0,0,0,0];
     for(const head in dataWithHead){
       if(Object.prototype.hasOwnProperty.call(dataWithHead,head)){
         const listData = dataWithHead[head];
         const checkedData = listData.filter(data => {
           const key = `${head}-${data[0]}-${data[1]}`;
-          return checkedKeys.indexOf(key) > -1;
-        }).map(item =>{
+          return checkedKeys.indexOf(key) > -1 ;
+        }).map((item,index) =>{
+          if(head === "砸金蛋(组)_ [总量]" && item[0]!== "ALL"){
+            let price = parseInt(item[0].split('&')[0]);
+            // console.log(`price = ${price}  item = ${item} result = ${price * parseInt(item[2])}`);
+            eggMoneyArr[1] = eggMoneyArr[1] + price * parseInt(item[2]?item[2]:0);
+            eggMoneyArr[2] = eggMoneyArr[1] + price * parseInt(item[3]?item[3]:0);
+            eggMoneyArr[3] = eggMoneyArr[1] + price * parseInt(item[4]?item[4]:0);
+            eggMoneyArr[4] = eggMoneyArr[1] + price * parseInt(item[5]?item[5]:0);
+            eggMoneyArr[5] = eggMoneyArr[1] + price * parseInt(item[6]?item[6]:0);
+            eggMoneyArr[6] = eggMoneyArr[1] + price * parseInt(item[7]?item[7]:0);
+            eggMoneyArr[7] = eggMoneyArr[1] + price * parseInt(item[8]?item[8]:0);
+            eggMoneyArr[8] = eggMoneyArr[1] + price * parseInt(item[9]?item[9]:0);
+            // console.log(`eggMoneyArr = ${eggMoneyArr}`)
+            return ;
+          }
           const [first,second,...data] = item;
           const key = `${head}-${first}-${second}`;
           const tag = mapKeyTag[key];
           // return [tag,...data];
           return {id:key,content:[tag,...data]}
         })
-        // console.log(JSON.stringify(checkedData));
-        if(checkedData.length >0)
-          DragListData.push(...checkedData);
+        if(checkedData.length >0){
+          const checkedResultData = checkedData.filter(item => item)
+          DragListData.push(...checkedResultData);
+        }
       }
     }
+    DragListData.push({
+      id:"砸金蛋(组)_ [总量]-砸蛋总收入",
+      content:eggMoneyArr,
+    })
+    // console.log(JSON.stringify(DragListData))
     const orderResult = [];
     const colsOrderItem = colsOrder[0];
+    if(colsOrderItem)
+      colsOrderItem["extra"] = "砸金蛋(组)_ [总量]-砸蛋总收入"
     // DragListData 根据colsOrderItem 排序
     for(let key in colsOrderItem){
       let found = false;
@@ -206,8 +230,10 @@ export default class SourceTree extends PureComponent {
     for(let item of orderResult){
       csvRowsOrigin.push(item.content);
     }
+    // console.log(`csvRowsOrigin = ${JSON.stringify(csvRowsOrigin)}`)
     // 数组转置
     const csvRows = arrayTranspose(csvRowsOrigin);
+    // console.log(`csvRowsOrigin = ${JSON.stringify(csvRows)}`)
     let csvString = "";
     if(csvRows)
       csvString = '\uFEFF' + csvRows.join('\n');
@@ -216,7 +242,7 @@ export default class SourceTree extends PureComponent {
           icon="download"
           size="large"
           type="primary"
-          style={{marginLeft:"25%"}}
+          style={{marginLeft:"45%"}}
       >
           <a
               href={'data:attachment/csv,' + encodeURI(csvString)}
