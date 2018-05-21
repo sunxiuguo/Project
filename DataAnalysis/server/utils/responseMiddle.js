@@ -31,7 +31,7 @@ module.exports = async (ctx, next) => {
         responseBody.status = "error";
         ctx.body = responseBody;   
     }
-    ctx.success = ({ data,cols,treeInfo }) => {
+    ctx.success = ({ data,cols,treeInfo,colsOrder }) => {
         responseBody.cols = cols;
         if(data){
             responseBody.data.list = data;
@@ -41,6 +41,9 @@ module.exports = async (ctx, next) => {
         }
         if(treeInfo){
             responseBody.treeInfo.list = treeInfo;
+        }
+        if(colsOrder){
+            responseBody.colsOrder = colsOrder;
         }
         responseBody.status = "success";
         ctx.body = responseBody;

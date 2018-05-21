@@ -155,8 +155,9 @@ export default class SourceTree extends PureComponent {
   }
 
   render(){
-    const { url: { treeInfo ,data:{ list } ,colsInfo },loading } = this.props;
+    const { url: { treeInfo ,data:{ list } ,colsInfo,colsOrder },loading } = this.props;
     const TabPaneList = this.mapTabPane(treeInfo.list);
+    console.log(`IN sourceTree colsOrder=${JSON.stringify(colsOrder)}`)
     const checkedCols = colsInfo.filter(col => col.checked); // 勾选的列的所有信息
     const mapKeyTag = {};
     for(const item of checkedCols){

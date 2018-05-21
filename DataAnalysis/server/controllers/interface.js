@@ -42,7 +42,6 @@ const InterfaceController = {
         return ctx.success({data});
     },
     async patchColsInfo(ctx,next){
-        console.log(`Enter patchColsInfo`)
         const requestBody = ctx.request.body;
         const result = await InterfaceService.patchColsInfo(requestBody);
         const cols = await InterfaceService.getColsInfo({});
@@ -50,6 +49,14 @@ const InterfaceController = {
             return ctx.error({cols});
         return ctx.success({cols});
     },
+    async patchColsOrder(ctx,next){
+        const requestBody = ctx.request.body;
+        const result = await InterfaceService.patchColsOrder(requestBody);
+        const colsOrder = await InterfaceService.getColsOrder({});
+        if(!result)
+            return ctx.error({colsOrder});
+        return ctx.success({colsOrder});
+    }
     
     
 }

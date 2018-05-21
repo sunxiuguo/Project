@@ -65,8 +65,8 @@ export default {
     *getCheckedColsOrder({ payload }, { call, put }) {
       const response = yield call(patchOrder, payload);
       yield put({
-        type: 'saveCols',
-        payload: response.cols,
+        type: 'saveOrder',
+        payload: response.colsOrder,
       });
     },
   },
@@ -83,6 +83,7 @@ export default {
         ...state,
         treeInfo: action.payload.treeInfo,
         colsInfo:action.payload.cols,
+        colsOrder:action.payload.colsOrder,
         data:action.payload.data,
       };
     },

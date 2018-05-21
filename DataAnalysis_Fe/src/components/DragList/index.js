@@ -69,17 +69,25 @@ export default class DragList extends PureComponent {
 
 
   onDragEnd = result => {
+    const { dispatch } = this.props;
+
     // dropped outside the list
     if (!result.destination) {
       return;
     }
-
     const items = reorder(
       this.state.items,
       result.source.index,
       result.destination.index
     );
-    console.log(JSON.stringify(items))
+    const orderID = [];
+    for(let col of items){
+      orderID.push(col.id)
+    }
+    dispatch({
+      type:'url/getCheckedColsOrder',
+      payload:orderID,
+    })
     this.setState({
       items,
     });

@@ -3,7 +3,7 @@ const DateTime = require('../utils/datetime');
 const util = require('../utils/utilMethods');
 const db = require('../utils/db-util');
 const options = require('../../config');
-const { database:{ MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME, COLLECTION_COLUMNS_NAME } } = options;
+const { database:{ MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME, COLLECTION_COLUMNS_NAME,COLLECTION_COLUMNS_ORDER } } = options;
 
 const interfaceInfo ={
     /**
@@ -29,7 +29,10 @@ const interfaceInfo ={
         const interfaceTreeDataAndCol = await util.renderColumns(interfaceList);
         const { treeInfo,colsInfo } = interfaceTreeDataAndCol;
         // 保存列表结构表头信息 并返回新的列信息
+        // if(db.collectionIfExist(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME))
+        //     await InterfaceModel.deleteInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,{});
         const cols = await InterfaceModel.postColInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_NAME,colsInfo);
+        const colsOrder = await this.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER,{});
         return {data:interfaceList,cols,treeInfo};
     },
     /**
@@ -108,6 +111,19 @@ const interfaceInfo ={
         let result = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,params);
         return result;
     },
+    async getColsOrder( params ){
+        let result = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_ORDER,params);
+        return result;
+    },
+    async patchColsOrder( params ){
+        // console.log(`in patchColsOrder ${JSON.stringify(params)}`)
+        if(JSON.stringify(params) === "{}")
+            return;
+        if(db.collectionIfExist(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER))
+            await InterfaceModel.deleteInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_ORDER,{});
+        let result = await InterfaceModel.postInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER,params);
+        return result;
+    }
 
 }
 
