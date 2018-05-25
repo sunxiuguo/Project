@@ -183,13 +183,13 @@ export default class SourceTree extends PureComponent {
             let price = parseInt(item[0].split('&')[0]);
             // console.log(`price = ${price}  item = ${item} result = ${price * parseInt(item[2])}`);
             eggMoneyArr[1] = eggMoneyArr[1] + price * parseInt(item[2]?item[2]:0);
-            eggMoneyArr[2] = eggMoneyArr[1] + price * parseInt(item[3]?item[3]:0);
-            eggMoneyArr[3] = eggMoneyArr[1] + price * parseInt(item[4]?item[4]:0);
-            eggMoneyArr[4] = eggMoneyArr[1] + price * parseInt(item[5]?item[5]:0);
-            eggMoneyArr[5] = eggMoneyArr[1] + price * parseInt(item[6]?item[6]:0);
-            eggMoneyArr[6] = eggMoneyArr[1] + price * parseInt(item[7]?item[7]:0);
-            eggMoneyArr[7] = eggMoneyArr[1] + price * parseInt(item[8]?item[8]:0);
-            eggMoneyArr[8] = eggMoneyArr[1] + price * parseInt(item[9]?item[9]:0);
+            eggMoneyArr[2] = eggMoneyArr[2] + price * parseInt(item[3]?item[3]:0);
+            eggMoneyArr[3] = eggMoneyArr[3] + price * parseInt(item[4]?item[4]:0);
+            eggMoneyArr[4] = eggMoneyArr[4] + price * parseInt(item[5]?item[5]:0);
+            eggMoneyArr[5] = eggMoneyArr[5] + price * parseInt(item[6]?item[6]:0);
+            eggMoneyArr[6] = eggMoneyArr[6] + price * parseInt(item[7]?item[7]:0);
+            eggMoneyArr[7] = eggMoneyArr[7] + price * parseInt(item[8]?item[8]:0);
+            eggMoneyArr[8] = eggMoneyArr[8] + price * parseInt(item[9]?item[9]:0);
             // console.log(`eggMoneyArr = ${eggMoneyArr}`)
             return ;
           }
