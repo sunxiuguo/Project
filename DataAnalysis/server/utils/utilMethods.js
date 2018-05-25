@@ -3,22 +3,34 @@ const options = require('../../config');
 const fs = require('fs');
 const cheerio = require('cheerio');
 const cheerioTableparser = require('cheerio-tableparser');
+const moment = require('./datetime');
+const log4js = require('koa-log4')
+const logger = log4js.getLogger('util')
 
-
+let count = 0;
 const util = {
     /**
-     * 创建并写入文件，如果存在文件则不操作
+     * 创建并写入文件，如果存在文件则追加写入
      * @param {string} fileName 文件路径及名称
      * @param {json} fileData 文件内容
      */
     async writeFile(fileName,fileData){
+        logger.info(`Enter writeFile `)
+        fileName = moment.getNowDatetime() +'_'+ fileName ;
         fs.exists(fileName,function(exists){
             if(!exists){
-                fs.writeFile(fileName, fileData,  function(err) {
+                fs.writeFile(fileName, JSON.stringify(fileData),  function(err) {
                     if (err) 
-                        console.error(err)
-                    console.log(fileName+"数据写入成功！");
+                        logger.error(err)
+                    logger.info(fileName+"数据写入成功！");
                 });
+            }else{
+                fs.appendFile(fileName, JSON.stringify(fileData), function (err) {
+                    if (err) 
+                        logger.error(err)
+                     //数据被添加到文件的尾部
+                     logger.info(fileName+"数据追加写入成功！"); 
+                 });
             }
         })
     },
@@ -27,6 +39,7 @@ const util = {
      * 登录，获取COOKIE
      */
     getCookie() {
+        logger.info(`Enter getCookie`)
         return new Promise((resolve,reject) =>{
             superagent.post(options.url.POST_LOGIN)
             .type('form')
@@ -35,9 +48,12 @@ const util = {
                 password: options.user.password,
             })
             .end(function(err, res) {
-                if (err)
+                if (err){
+                    logger.error(`In getCookie ->${err}`)
                     reject(err)
+                }
                 let cookie = res.header['set-cookie']; //从response中得到cookie
+                logger.info(`In getCookie ->cookie=${cookie}`)
                 resolve(cookie)
             })
         })
@@ -50,11 +66,16 @@ const util = {
      * @param {*} keys 
      */
     hasAllKey(objQuery,...keys){
+        logger.info(`Enter hasAllKey ->obj=${JSON.stringify(objQuery)} keys=${keys}`)
         let obj = JSON.parse(JSON.stringify(objQuery))
         for(let key of keys){
-            if(!obj.hasOwnProperty(key))
+            if(!obj.hasOwnProperty(key)){
+                logger.info(`In hasAllKey ->result=${false}`)
                 return false
+            }
+                
         }
+        logger.info(`In hasAllKey ->result=${true}`)
         return true
     },
     /**
@@ -66,14 +87,18 @@ const util = {
         let urlExpand = url;
         if(date)
             urlExpand = `${url}&sday=${date.split(',')[0]}&eday=${date.split(',')[1]}&app=0&sys=000000&filter_id=0`;
+        logger.info(`Enter getDataByUrl ->url=${urlExpand}`)
         let cookie = await this.getCookie();
         return new Promise((resolve,reject) =>{
             superagent.get(urlExpand)
             .set('Cookie', cookie)
             //.query({order:'desc'}) 查询字符串
             .end(function(err, res) {
-                if (err)
+                if (err){
+                    logger.error(`In getDataByUrl ->${err}`)
                     reject(err)
+                }
+
                 resolve(res.text)
             })
         })
@@ -84,13 +109,23 @@ const util = {
      * @return json数据
      */
     async mapHtmlTableToJSON( html ){
+        logger.info(`Enter mapHtmlTableToJSON`)
         if(!html)
             return [];
         const $ = cheerio.load(html);
+        // 周统计html中的列表元素是table_title table_body
+        // 其他html中的列表元素是dtable_title dtable_body
+        // const titleSelect = $('.dtable_title').length>0 ? '.dtable_title' : '.table_title';
+        // const bodySelect = $('.dtable_body').length>0 ? '.dtable_body' : '.table_body';
+        const titleSelect = '.dtable_title';
+        const bodySelect = '.dtable_body';
         let resultJson = {};
-        $('.dtable_title').each(function(indexTitle){
+        // $('.dtable_title')  $("div[class$='table_title']")  
+        // 使用模糊匹配 耗时太长
+        $(titleSelect).each(function(indexTitle){
             let title = $(this).text();
-            $('.dtable_body').each(function(indexBody){
+            // $('.dtable_body')  $("div[class$='table_body']")
+            $(bodySelect).each(function(indexBody){
                 // htmlTable转换为json
                 let tableHtml = cheerio.load($(this).html());
                 cheerioTableparser(tableHtml);
@@ -115,6 +150,7 @@ const util = {
      * @param {*} listData 
      */
     async renderColumns( listData ){
+        logger.info(`Enter renderColumns`)
         let listDataTemp = JSON.parse(JSON.stringify(listData));
         let tableCols = [];
         let colData = listDataTemp.map(function(interfaceItem){
@@ -143,6 +179,7 @@ const util = {
      * @param {*} list 
      */
     renderTreeData(list){
+        logger.info(`Enter renderTreeData`)        
         let tree = [];
         let treeObj = {};
         let firstKey = "";
@@ -176,12 +213,20 @@ const util = {
      * @returns true 代表两个数组元素相同;false 代表两个数组元素不同
      */
     isArrSame(arr1 , arr2){
-        if(arr1.length !== arr2.length)
+        logger.info(`Enter isArrSame ->arr1=${JSON.stringify(arr1)} arr2=${JSON.stringify(arr2)}`)        
+        
+        if(arr1.length !== arr2.length){
+            logger.info(`In isArrSame ->result=${false}`)
             return false;
+        }
+            
         for(let item of arr1){
-            if(!arr2.includes(item))
+            if(!arr2.includes(item)){
+                logger.info(`In isArrSame ->result=${false}`)
                 return false;
+            }
         }    
+        logger.info(`In isArrSame ->result=${true}`)
         return true;
     },
     /**
@@ -193,6 +238,7 @@ const util = {
      * @returns ["a","b",...]
      */
     getKeyofListobj(key,list){
+        logger.info(`Enter getKeyofListobj `)
         let resultArr = [];
         for(let obj of list){
             resultArr.push(obj[key]);

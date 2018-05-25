@@ -3,6 +3,8 @@ const DateTime = require('../utils/datetime');
 const util = require('../utils/utilMethods');
 const db = require('../utils/db-util');
 const options = require('../../config');
+const log4js = require('koa-log4')
+const logger = log4js.getLogger('Service')
 const { database:{ MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME, COLLECTION_COLUMNS_NAME,COLLECTION_COLUMNS_ORDER } } = options;
 
 const interfaceInfo ={
@@ -11,6 +13,7 @@ const interfaceInfo ={
      * @param {*} params 
      */
     async getInterfaceInfo( params ){
+        logger.info(`Enter getInterfaceInfo ->${JSON.stringify(params)}`)
         let interfaceList = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
         //组织Html数据,转换成Json格式
         for(let obj of interfaceList){
@@ -24,6 +27,7 @@ const interfaceInfo ={
      * @param {*} params 
      */
     async getInterfaceTreeInfo( params ){
+        logger.info(`Enter getInterfaceTreeInfo ->${JSON.stringify(params)}`)
         const interfaceList = await this.getInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
         // 获取树结构表头信息
         const interfaceTreeDataAndCol = await util.renderColumns(interfaceList);
@@ -41,6 +45,7 @@ const interfaceInfo ={
      * @returns 
      */
     async postInterfaceInfo( params ){
+        logger.info(`Enter postInterfaceInfo ->${JSON.stringify(params)}`)
         let result = await InterfaceModel.postInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
         return result;
     },
@@ -50,6 +55,7 @@ const interfaceInfo ={
      * @returns 
      */
     async deleteInterfaceInfo( params ){
+        logger.info(`Enter deleteInterfaceInfo ->${JSON.stringify(params)}`)
         let result = await InterfaceModel.deleteInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,params);
         return result;
     },
@@ -59,6 +65,7 @@ const interfaceInfo ={
      * @returns 
      */
     async deleteManyInterfaceInfo( params ){
+        logger.info(`Enter deleteManyInterfaceInfo ->${JSON.stringify(params)}`)
         //{"key":"6,7"}
         let resultAll = "success";
         let keyArr = params.key.split(',');
@@ -66,6 +73,7 @@ const interfaceInfo ={
             let param = {key};
             let result = await InterfaceModel.deleteInterfaceInfo(MONGODB_DATABASE_NAME, COLLECTION_INTERFACE_NAME,param);
             if(!result){
+                logger.error(`In deleteManyInterfaceInfo ->${result}`)
                 resultAll = "error";
                 break;
             }
@@ -77,6 +85,7 @@ const interfaceInfo ={
      * @param {any} params 
      */
     async getDataByInterface( params ){
+        logger.info(`Enter getDataByInterface ->${JSON.stringify(params)}`)
         // 更新 updatedAt html字段
         let dateTimeNow = DateTime.getNowDatetime();
         let updateObj = {updatedAt:dateTimeNow,html:""};
@@ -86,6 +95,7 @@ const interfaceInfo ={
         return result;
     },
     async patchColsInfo( params ){
+        logger.info(`Enter patchColsInfo ->${JSON.stringify(params)}`)
         // 需要保存colsOrder到order表里
         let resultAll = "success";
         const { key, ...updateData } = params;
@@ -103,6 +113,7 @@ const interfaceInfo ={
             const filter = second ? {head,first,second} : {head,first};
             let result = await InterfaceModel.patchInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,updateData,filter);
             if(!result){
+                logger.error(`In patchColsInfo ->${result}`)
                 resultAll = "error";
                 break;
             }
@@ -110,15 +121,17 @@ const interfaceInfo ={
         return resultAll;
     },
     async getColsInfo( params ){
+        logger.info(`Enter getColsInfo ->${JSON.stringify(params)}`)
         let result = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_NAME,params);
         return result;
     },
     async getColsOrder( params ){
+        logger.info(`Enter getColsOrder ->${JSON.stringify(params)}`)
         let result = await InterfaceModel.getInterfaceInfo(MONGODB_DATABASE_NAME,COLLECTION_COLUMNS_ORDER,params);
         return result;
     },
     async patchColsOrder( params ){
-        console.log(`in patchColsOrder ${JSON.stringify(params)}`)
+        logger.info(`Enter patchColsOrder ->${JSON.stringify(params)}`)
         if(JSON.stringify(params) === "{}" || JSON.stringify(params) === "[]")
             return;
         if(db.collectionIfExist(MONGODB_DATABASE_NAME, COLLECTION_COLUMNS_ORDER))

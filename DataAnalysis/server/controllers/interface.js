@@ -4,21 +4,25 @@
  */
 const util = require('../utils/utilMethods')
 const InterfaceService = require('../services/interface')
-
+const log4js = require('koa-log4')
+const logger = log4js.getLogger('Controller')
 
 const InterfaceController = {
     async getInterfaceInfo(ctx,next){
         const requestBody = ctx.request.query;
+        logger.info(`enter getInterfaceInfo ->${JSON.stringify(requestBody)}`)
         const data = await InterfaceService.getInterfaceInfo(requestBody);
         return ctx.success({data});       
     },
     async getInterfaceTreeInfo(ctx,next){
         const requestBody = ctx.request.query;
+        logger.info(`Enter getInterfaceTreeInfo ->${JSON.stringify(requestBody)}`)
         const dataAll = await InterfaceService.getInterfaceTreeInfo(requestBody);
         return ctx.success(dataAll);       
     },
     async postInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;
+        logger.info(`Enter postInterfaceInfo ->${JSON.stringify(requestBody)}`)
         const result = await InterfaceService.postInterfaceInfo(requestBody);
         const data = await InterfaceService.getInterfaceInfo({});
         if(!result)
@@ -27,6 +31,7 @@ const InterfaceController = {
     },
     async deleteInterfaceInfo(ctx,next){
         const requestBody = ctx.request.body;
+        logger.info(`Enter deleteInterfaceInfo ->${JSON.stringify(requestBody)}`)
         const result = await InterfaceService.deleteManyInterfaceInfo(requestBody);
         const data = await InterfaceService.getInterfaceInfo({});
         if(!result)
@@ -35,6 +40,7 @@ const InterfaceController = {
     },
     async getDataByInterface(ctx,next){
         const requestBody = ctx.request.body;
+        logger.info(`Enter getDataByInterface ->${JSON.stringify(requestBody)}`)
         const result = await InterfaceService.getDataByInterface(requestBody);
         const data = await InterfaceService.getInterfaceInfo({});
         if(!result)
@@ -43,6 +49,7 @@ const InterfaceController = {
     },
     async patchColsInfo(ctx,next){
         const requestBody = ctx.request.body;
+        logger.info(`Enter patchColsInfo ->${JSON.stringify(requestBody)}`)
         const result = await InterfaceService.patchColsInfo(requestBody);
         const cols = await InterfaceService.getColsInfo({});
         if(!result)
@@ -51,6 +58,7 @@ const InterfaceController = {
     },
     async patchColsOrder(ctx,next){
         const requestBody = ctx.request.body;
+        logger.info(`Enter patchColsOrder ->${JSON.stringify(requestBody)}`)
         const result = await InterfaceService.patchColsOrder(requestBody);
         const colsOrder = await InterfaceService.getColsOrder({});
         if(!result)
