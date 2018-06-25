@@ -5,7 +5,7 @@
 const util = require('../utils/utilMethods')
 const InterfaceService = require('../services/interface')
 const log4js = require('koa-log4')
-const logger = log4js.getLogger('Controller')
+const logger = log4js.getLogger('Controller/interface.js')
 
 const InterfaceController = {
     async getInterfaceInfo(ctx,next){

@@ -1,7 +1,7 @@
 const Options = require('../../config');
 const MongoClient = require('mongodb').MongoClient;
 const log4js = require('koa-log4')
-const logger = log4js.getLogger('Database')
+const logger = log4js.getLogger('util/db-util.js')
 const mongoConnect = Options.database.MONGODB_CONNECT; //数据库连接地址
 //todo  已有数据库的日志记录，待添加node日志
 const action = {
@@ -65,7 +65,7 @@ const action = {
                     console.info(`
                         数据库：${dbName}
                         集合：${collectionName}
-                        成功插入${res.insertedCount}条数据
+                        
                     `);
                     resolve(res)
                     db.close()
@@ -132,7 +132,7 @@ const action = {
                         console.info(`
                             数据库：${dbName}
                             集合：${collectionName}
-                            ${res.result.nModified}条文档被更新 更新条件为${JSON.stringify(filter)} 更新为${JSON.stringify(updateData)}
+                            ${res.result.nModified}条文档被更新
                         `);
                     resolve(res)
                     db.close();

@@ -1,7 +1,7 @@
 const db = require('../utils/db-util');
 const util = require('../utils/utilMethods');
 const log4js = require('koa-log4')
-const logger = log4js.getLogger('Model')
+const logger = log4js.getLogger('Model/interface.js')
 
 const interfaceInfo = {
     /**
@@ -22,7 +22,7 @@ const interfaceInfo = {
      * @returns 
      */
     async postInterfaceInfo(dbName,collectionName,params){
-        logger.info(`Enter postInterfaceInfo ->${dbName} ${collectionName} ${JSON.stringify(params)}`)
+        logger.info(`Enter postInterfaceInfo ->${dbName} ${collectionName} `)
         // 插入自增唯一标识key
         let count = await db.getColContentCount(dbName,collectionName);
         params.key = (count + 1).toString();
@@ -37,7 +37,7 @@ const interfaceInfo = {
      * @returns 
      */
     async postColInfo( dbName,collectionName,params ){
-        logger.info(`Enter postColInfo ->${dbName} ${collectionName} ${JSON.stringify(params)}`)
+        logger.info(`Enter postColInfo ->${dbName} ${collectionName} `)
         // 判断传入的列的key与查数据库的key是否相同
         // 如果相同,则不执行insertMany,返回select数据库的结果
         // 如果不相同,insert不同的key
@@ -46,8 +46,9 @@ const interfaceInfo = {
         let colsInfo = await db.select(dbName,collectionName,{});
         let colsKeyInfo = util.getKeyofListobj("key",colsInfo);
         let paramsKeyInfo = util.getKeyofListobj("key",params);
-        if(!util.isArrSame(colsKeyInfo,paramsKeyInfo)){
+        if(!util.isArrSame(colsKeyInfo,paramsKeyInfo)){ //todo !
             logger.info(`In postColInfo -> exec insertMany`)
+            // util.writeFile('params',params)
             await db.insertMany(dbName,collectionName,params);
             colsResult = await db.select(dbName,collectionName,{});
         }else{
@@ -75,7 +76,7 @@ const interfaceInfo = {
      * @returns 
      */
     async patchInterfaceInfo(dbName,collectionName,updateData,filter){
-        logger.info(`Enter patchInterfaceInfo ->${dbName} ${collectionName} updateData=${JSON.stringify(updateData)} filter=${JSON.stringify(filter)}`)
+        logger.info(`Enter patchInterfaceInfo ->${dbName} ${collectionName} `)
         let formatData = {
             $set:{}
         };

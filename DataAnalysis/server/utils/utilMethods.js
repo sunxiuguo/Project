@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 const cheerioTableparser = require('cheerio-tableparser');
 const moment = require('./datetime');
 const log4js = require('koa-log4')
-const logger = log4js.getLogger('util')
+const logger = log4js.getLogger('util/utilMethods.js')
 
 let count = 0;
 const util = {
@@ -52,6 +52,7 @@ const util = {
                     logger.error(`In getCookie ->${err}`)
                     reject(err)
                 }
+                logger.debug(JSON.stringify(res.header))
                 let cookie = res.header['set-cookie']; //从response中得到cookie
                 logger.info(`In getCookie ->cookie=${cookie}`)
                 resolve(cookie)
@@ -84,6 +85,7 @@ const util = {
      * @returns {html} 返回Html格式text
      */
     async getDataByUrl( url,date ){
+        // date = '20180601,20180609';
         let urlExpand = url;
         if(date)
             urlExpand = `${url}&sday=${date.split(',')[0]}&eday=${date.split(',')[1]}&app=0&sys=000000&filter_id=0`;
@@ -91,7 +93,7 @@ const util = {
         let cookie = await this.getCookie();
         return new Promise((resolve,reject) =>{
             superagent.get(urlExpand)
-            .set('Cookie', cookie)
+            .set('Cookie', `PASS_CODE=982dwLVNyu3%2Bz0RSwZp4gpy%2F%2BiSR1ChPp6iVPLuSYaz09mykNepUu%2BJNoH43NkMqw%2F2Ia%2BrtAv%2FPmrb12Lk9DDTdahLR`)
             //.query({order:'desc'}) 查询字符串
             .end(function(err, res) {
                 if (err){
@@ -112,6 +114,7 @@ const util = {
         logger.info(`Enter mapHtmlTableToJSON`)
         if(!html)
             return [];
+        // logger.debug(`cheerio.load(html)`);
         const $ = cheerio.load(html);
         // 周统计html中的列表元素是table_title table_body
         // 其他html中的列表元素是dtable_title dtable_body
@@ -122,10 +125,14 @@ const util = {
         let resultJson = {};
         // $('.dtable_title')  $("div[class$='table_title']")  
         // 使用模糊匹配 耗时太长
+        // logger.debug(`titleSelect=${titleSelect}  bodySelect=${bodySelect}`);
         $(titleSelect).each(function(indexTitle){
             let title = $(this).text();
+            // if(titleSelect === '.table_title')
+                // logger.debug(`title = ${title}`)
             // $('.dtable_body')  $("div[class$='table_body']")
             $(bodySelect).each(function(indexBody){
+                // logger.debug(`enter 2layer bodySelect`)
                 // htmlTable转换为json
                 let tableHtml = cheerio.load($(this).html());
                 cheerioTableparser(tableHtml);
@@ -213,7 +220,10 @@ const util = {
      * @returns true 代表两个数组元素相同;false 代表两个数组元素不同
      */
     isArrSame(arr1 , arr2){
-        logger.info(`Enter isArrSame ->arr1=${JSON.stringify(arr1)} arr2=${JSON.stringify(arr2)}`)        
+        // logger.info(`Enter isArrSame 
+        //     ${JSON.stringify(arr1)}
+        //     ${JSON.stringify(arr2)}
+        //     `)        
         
         if(arr1.length !== arr2.length){
             logger.info(`In isArrSame ->result=${false}`)
