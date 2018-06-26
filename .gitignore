@@ -13,3 +13,5 @@ DataAnalysis/data/mongodb/diagnostic.data/metrics.interim
 DataAnalysis/node_modules/.npminstall.done
 Shop/src/common/config/database.js
 Shop/src/common/config/config.js
+DataAnalysis/data/logs/youlog.log
+DataAnalysis/data/mongodb/diagnostic.data/metrics.interim
