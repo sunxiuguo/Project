@@ -1,28 +1,47 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import './index.less'
+import { View, Text, Button } from '@tarojs/components'
 
-export default class Index extends Component {
+export default class PageView extends Component {
   config = {
     navigationBarTitleText: '列表页'
   }
 
-  componentWillMount () { }
+  constructor () {
+    super(...arguments)
 
-  componentDidMount () { }
+    this.state = {
+        contents: []
+    }
+  }
 
-  componentWillUnmount () { }
+  add = () => {
+    const cot = this.state.contents;
+    cot.push({text: 'hello world'})
 
-  componentDidShow () { }
+    this.setState({
+      contents: cot,
+    })
+  }
 
-  componentDidHide () { }
+  remove = () => {
+    const cot = this.state.contents
+    cot.pop()
+    this.setState({
+      contents: cot,
+    })
+  }
 
   render () {
     return (
-      <View className='index'>
-        <Text>这是列表页!</Text>
+      <View className='container'>
+              {this.state.contents.map(item => {
+                return (
+                  <Text key={item.text}>{item.text}</Text>
+                )
+              })}
+              <Button className='btn-max-w button_style' plain type='default' onClick={this.add}>add line</Button>
+              <Button className='btn-max-w button_style' plain type='default' disabled={this.state.contents.length ? false:true} onClick={this.remove}>remove line</Button>
       </View>
     )
   }
 }
-
